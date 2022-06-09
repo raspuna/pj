@@ -1,9 +1,54 @@
-import React from 'react'
+import axios from "axios";
+import React, { useState } from "react";
+import Form from "react-bootstrap/Form";
+import FormGroup from "react-bootstrap/FormGroup";
+import Button from "react-bootstrap/Button";
 
 function LogIn() {
+  const [loginInfo, setLoginInfo] = useState({
+    email: "",
+    password: "",
+  });
+  const submitHandler = (e) => {
+    e.preventDefault();
+    axios
+      .post(`${process.env.REACT_APP_SERVER_ADDRESS}/api/user/login`, loginInfo)
+      .then((res) => {
+        console.log(res);
+        console.log("success");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const changeHandler = (e) => {
+    setLoginInfo({ ...loginInfo, [e.target.name]: e.target.value });
+  };
   return (
-    <div>LogIn</div>
-  )
+    <div>
+      <Form onSubmit={submitHandler}>
+        <FormGroup>
+          <Form.Label>Email:</Form.Label>
+          <Form.Control
+            type="text"
+            value={loginInfo.email}
+            name="email"
+            onChange={changeHandler}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Form.Label>Password:</Form.Label>
+          <Form.Control
+            type="password"
+            value={loginInfo.password}
+            name="password"
+            onChange={changeHandler}
+          />
+        </FormGroup>
+        <Button type="submit">LogIn</Button>
+      </Form>
+    </div>
+  );
 }
 
-export default LogIn
+export default LogIn;

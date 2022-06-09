@@ -6,7 +6,6 @@ function Friend() {
   return (
     <div>
       <Header />
-      <FriendList />
     </div>
   );
 }
