@@ -1,10 +1,12 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import FormGroup from "react-bootstrap/FormGroup";
 import Button from "react-bootstrap/Button";
 
 function LogIn() {
+  const navigate = useNavigate();
   const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
@@ -16,6 +18,7 @@ function LogIn() {
       .then((res) => {
         console.log(res);
         console.log("success");
+        navigate("/home");
       })
       .catch((err) => {
         console.log(err);
@@ -42,6 +45,7 @@ function LogIn() {
             type="password"
             value={loginInfo.password}
             name="password"
+            autoComplete="on"
             onChange={changeHandler}
           />
         </FormGroup>
