@@ -51,6 +51,24 @@ const findByEmail = (pool, email, callback) => {
     connection.release();
   });
 };
+const login = (pool, data) => {
+  return new Promise((resolve, reject) => {
+    console.log("login");
+    console.log(data);
+    email = data.email;
+    sql = "SELECT * FROM users WHERE email=?";
+    pool.getConnection(function (err, connection) {
+      connection.query(sql, email, (err, results) => {
+        connection.release();
+        if (err) {
+          reject(err);
+        } else {
+          resolve(results);
+        }
+      });
+    });
+  });
+};
 const update = (pool, data, id, callback) => {
   console.log(`update id=${id}`);
   sql = "UPDATE users SET ? WHERE id=?";
@@ -74,4 +92,5 @@ module.exports = {
   findByEmail,
   update,
   remove,
+  login,
 };

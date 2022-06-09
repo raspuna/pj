@@ -1,11 +1,31 @@
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 const User = require("../models/user.models");
-const createUser = (req, res) => {
-  User.create(req.pool, req.body, function (err) {
+const secret = "qlalfdldkslqslek";
+
+const createUser = async (req, res) => {
+  const encryptedPassword = await bcrypt.hash(req.body.password, 10);
+  const user = {
+    ...req.body,
+    password: encryptedPassword,
+  };
+  User.create(req.pool, user, function (err) {
     if (err) {
       console.log(err);
       res.status(500).json({ err });
     } else {
-      res.status(200).json(req.body);
+      const userToken = jwt.sign(
+        {
+          id: req.body.id,
+        },
+        process.env.SECRET_KEY
+      );
+      res
+        .status(200)
+        .cookie("usertoken", userToken, secret, {
+          httpOnly: true,
+        })
+        .json(req.body);
     }
   });
 };
@@ -62,6 +82,33 @@ const deleteUser = (req, res) => {
     }
   });
 };
+const login = async (req, res) => {
+  const email = req.body.email;
+  const results = await User.login(req.pool, req.body);
+  if (results.length == 0) {
+    res.status(401).json({ err: "user not found" });
+  }
+  const user = results[0];
+  console.log(user);
+  const correctPassword = await bcrypt.compare(
+    req.body.password,
+    user.password
+  );
+  if (!correctPassword) {
+    res.status(401).json({ err: "user not found" });
+  }
+  const userToken = jwt.sign(
+    {
+      id: user.id,
+    },
+    process.env.SECRET_KEY
+  );
+  res
+    .cookie("usertoken", userToken, secret, {
+      httpOnly: true,
+    })
+    .json({ msg: "login success!" });
+};
 module.exports = {
   createUser,
   getUsers,
@@ -69,4 +116,5 @@ module.exports = {
   searchUser,
   updateUser,
   deleteUser,
+  login,
 };
