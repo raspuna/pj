@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("../models/user.models");
-const secret = "qlalfdldkslqslek";
 
 const createUser = async (req, res) => {
   const encryptedPassword = await bcrypt.hash(req.body.password, 10);
@@ -85,8 +84,10 @@ const deleteUser = (req, res) => {
 const login = async (req, res) => {
   const email = req.body.email;
   const results = await User.login(req.pool, req.body);
+  console.log(results);
   if (results.length == 0) {
     res.status(401).json({ err: "user not found" });
+    return;
   }
   const user = results[0];
   console.log(user);
@@ -104,12 +105,13 @@ const login = async (req, res) => {
     process.env.SECRET_KEY
   );
   res
-    .cookie("usertoken", userToken, secret, {
+    .cookie("usertoken", userToken, process.env.SECRET_KEY, {
       httpOnly: true,
     })
     .json({ msg: "login success!" });
 };
 const logout = (req, res) => {
+  console.log("user logout");
   res.clearCookie("usertoken");
   res.status(200).json({ msg: "logout" });
 };

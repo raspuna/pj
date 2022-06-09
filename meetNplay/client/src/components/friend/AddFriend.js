@@ -14,9 +14,13 @@ function AddFriend() {
   const submitHandler = (e) => {
     e.preventDefault();
     axios
-      .post(`${process.env.REACT_APP_SERVER_ADDRESS}/api/searchUser`, {
-        email: email,
-      })
+      .post(
+        `${process.env.REACT_APP_SERVER_ADDRESS}/api/searchUser`,
+        {
+          email: email,
+        },
+        { withCredentials: true }
+      )
       .then((res) => {
         console.log(res);
         if (res.data.length > 0) {
