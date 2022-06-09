@@ -109,6 +109,10 @@ const login = async (req, res) => {
     })
     .json({ msg: "login success!" });
 };
+const logout = (req, res) => {
+  res.clearCookie("usertoken");
+  res.status(200).json({ msg: "logout" });
+};
 module.exports = {
   createUser,
   getUsers,
@@ -117,4 +121,5 @@ module.exports = {
   updateUser,
   deleteUser,
   login,
+  logout,
 };
