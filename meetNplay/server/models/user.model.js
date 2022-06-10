@@ -1,3 +1,4 @@
+const { query } = require("../config/mysql");
 const validateUser = (userData, errArray) => {
   if (!userData.name) {
     errArray.push("user name is missing");
@@ -14,73 +15,37 @@ const validateUser = (userData, errArray) => {
   return true;
 };
 
-const create = (pool, data, callback) => {
+const create = async (data) => {
   console.log("create");
-  const errArray = [];
-  ///if (!validateUser(data, errArray)) {
-  //  throw errArray[0];
-  //}
   sql = "INSERT INTO users SET ?";
-  pool.getConnection(function (err, connection) {
-    connection.query(sql, data, callback);
-    connection.release();
-  });
+  return await query(sql, data);
 };
 
-const find = (pool, callback) => {
+const find = async () => {
   console.log("select *");
   sql = "SELECT * FROM users";
-  pool.getConnection(function (err, connection) {
-    connection.query(sql, callback);
-    connection.release();
-  });
+  return await query(sql);
 };
-const findOne = (pool, data) => {
-  return new Promise((resolve, reject) => {
-    console.log("findOne");
-    console.log(data);
-    sql = "SELECT * FROM users WHERE ?";
-    pool.getConnection(function (err, connection) {
-      connection.query(sql, data, (err, results) => {
-        connection.release();
-        if (err) {
-          reject(err);
-        } else {
-          resolve(results);
-        }
-      });
-    });
-  });
+const findOne = async (data) => {
+  sql = "SELECT * FROM users WHERE ?";
+  return await query(sql, data);
 };
-const findByEmail = (pool, email, callback) => {
-  console.log("select by email");
-  sql = "SELECT * FROM users where email=?";
-  pool.getConnection(function (err, connection) {
-    connection.query(sql, email, callback);
-    connection.release();
-  });
-};
-const update = (pool, data, id, callback) => {
+
+const update = async (data, id) => {
   console.log(`update id=${id}`);
   sql = "UPDATE users SET ? WHERE id=?";
-  pool.getConnection(function (err, connection) {
-    connection.query(sql, [data, id], callback);
-    connection.release();
-  });
+  return await query(sql, [data, id]);
 };
-const remove = (pool, id, callback) => {
+
+const remove = async (id) => {
   console.log(`delete id=${id}`);
   sql = "DELETE FROM users WHERE id=?";
-  pool.getConnection(function (err, connection) {
-    connection.query(sql, id, callback);
-    connection.release();
-  });
+  return await query(sql, id);
 };
 module.exports = {
   create,
   find,
   findOne,
-  findByEmail,
   update,
   remove,
 };

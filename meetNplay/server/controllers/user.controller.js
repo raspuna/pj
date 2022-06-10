@@ -8,7 +8,7 @@ const register = async (req, res) => {
     ...req.body,
     password: encryptedPassword,
   };
-  User.create(req.pool, user, function (err) {
+  User.create(user, function (err) {
     if (err) {
       console.log(err);
       res.status(500).json({ err });
@@ -29,7 +29,7 @@ const register = async (req, res) => {
   });
 };
 const getUsers = (req, res) => {
-  User.find(req.pool, function (err, results, fields) {
+  User.find(function (err, results, fields) {
     if (err) {
       res.status(500).json({ err });
     } else {
@@ -40,7 +40,7 @@ const getUsers = (req, res) => {
 //todo fix
 const getUser = (req, res) => {
   console.log("hey");
-  User.findOne(req.pool, req.params.id, function (err, results, fields) {
+  User.findOne(req.params.id, function (err, results, fields) {
     if (err) {
       res.status(500).json({ err });
     } else {
@@ -51,28 +51,23 @@ const getUser = (req, res) => {
 const searchUser = async (req, res) => {
   console.log("getUserByEmail");
   try {
-    const results = await User.findOne(req.pool, { email: req.body.email });
+    const results = await User.findOne({ email: req.body.email });
     res.status(200).json(results);
   } catch (err) {
     res.status(500).json({ err });
   }
 };
 const updateUser = (req, res) => {
-  User.update(
-    req.pool,
-    req.body,
-    req.params.id,
-    function (err, results, fields) {
-      if (err) {
-        res.status(500).json({ err });
-      } else {
-        res.status(200).json(results);
-      }
+  User.update(req.body, req.params.id, function (err, results, fields) {
+    if (err) {
+      res.status(500).json({ err });
+    } else {
+      res.status(200).json(results);
     }
-  );
+  });
 };
 const deleteUser = (req, res) => {
-  User.remove(req.pool, req.params.id, function (err, results, fields) {
+  User.remove(req.params.id, function (err, results, fields) {
     if (err) {
       res.status(500).json({ err });
     } else {
@@ -83,7 +78,7 @@ const deleteUser = (req, res) => {
 const login = async (req, res) => {
   const email = req.body.email;
   try {
-    const results = await User.findOne(req.pool, { email: email });
+    const results = await User.findOne({ email: email });
 
     console.log(results);
     if (results.length == 0) {
@@ -123,7 +118,7 @@ const logout = (req, res) => {
 const getLoggedInUser = async (req, res) => {
   const decodeJwt = jwt.decode(req.cookies.usertoken, { complete: true });
   try {
-    const results = await User.findOne(req.pool, { id: decodeJwt.payload.id });
+    const results = await User.findOne({ id: decodeJwt.payload.id });
     if (results.length == 0) {
       res.status(401).json({ err: "invalid access" });
     } else {

@@ -7,7 +7,7 @@ const createFriend = async (req, res) => {
   const data = { user_id: decodeJwt.payload.id, friend_id: req.body.friend_id };
   console.log(data);
   try {
-    const result = await Friend.create(req.pool, data);
+    const result = await Friend.create(data);
     res.status(200).json(result);
   } catch (e) {
     console.log(e);
@@ -19,7 +19,7 @@ const getFriends = async (req, res) => {
   const decodeJwt = jwt.decode(req.cookies.usertoken, { complete: true });
   const data = decodeJwt.payload.id;
   try {
-    const results = await Friend.find(req.pool, data);
+    const results = await Friend.find(data);
     res.status(200).json(results);
   } catch (e) {
     console.log(e);
