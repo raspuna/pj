@@ -7,6 +7,7 @@ import Button from "react-bootstrap/Button";
 
 function LogIn() {
   const navigate = useNavigate();
+  const [error, setError] = useState("");
   const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
@@ -22,10 +23,14 @@ function LogIn() {
       })
       .catch((err) => {
         console.log(err);
+        if (err.response.data) {
+          setError(err.response.data.err);
+        }
       });
   };
   const changeHandler = (e) => {
     setLoginInfo({ ...loginInfo, [e.target.name]: e.target.value });
+    setError("");
   };
   return (
     <div>
@@ -49,6 +54,7 @@ function LogIn() {
             onChange={changeHandler}
           />
         </FormGroup>
+        {error && <Form.Text className="text-danger">{error}</Form.Text>}
         <Button type="submit">LogIn</Button>
       </Form>
     </div>
