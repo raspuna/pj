@@ -1,35 +1,15 @@
-const create = (pool, data) => {
-  return new Promise((resolve, reject) => {
-    console.log("friendship create");
-    sql = "INSERT INTO friendships SET ? ";
-    pool.getConnection(function (err, connection) {
-      connection.query(sql, data, (err, result) => {
-        connection.release();
-        if (err) {
-          reject(err);
-        } else {
-          resolve(result);
-        }
-      });
-    });
-  });
+const { runQuery } = require("./lib.js");
+
+const create = async (pool, data) => {
+  console.log("friendship create");
+  sql = "INSERT INTO friendships SET ? ";
+  return await runQuery(pool, sql, data);
 };
-const find = (pool, data) => {
-  return new Promise((resolve, reject) => {
-    console.log("friendship select ");
-    sql =
-      "SELECT u.* FROM friendships JOIN users u ON friend_id=u.id WHERE user_id=?";
-    pool.getConnection(function (err, connection) {
-      connection.query(sql, data, (err, result) => {
-        connection.release();
-        if (err) {
-          reject(err);
-        } else {
-          resolve(result);
-        }
-      });
-    });
-  });
+const find = async (pool, data) => {
+  console.log("friendship select ");
+  sql =
+    "SELECT u.* FROM friendships JOIN users u ON friend_id=u.id WHERE user_id=?";
+  return await runQuery(pool, sql, data);
 };
 module.exports = {
   create,
