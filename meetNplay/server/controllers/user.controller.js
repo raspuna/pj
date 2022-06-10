@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("../models/user.models");
 
-const createUser = async (req, res) => {
+const register = async (req, res) => {
   const encryptedPassword = await bcrypt.hash(req.body.password, 10);
   const user = {
     ...req.body,
@@ -21,7 +21,8 @@ const createUser = async (req, res) => {
       );
       res
         .status(200)
-        .cookie("usertoken", userToken, secret, {
+        .cookie("usertoken", userToken, {
+          expires: new Date(Date.now() + 1000000),
           httpOnly: true,
         })
         .json(req.body);
@@ -37,6 +38,7 @@ const getUsers = (req, res) => {
     }
   });
 };
+//todo fix
 const getUser = (req, res) => {
   console.log("hey");
   User.findOne(req.pool, req.params.id, function (err, results, fields) {
@@ -47,16 +49,10 @@ const getUser = (req, res) => {
     }
   });
 };
-const searchUser = (req, res) => {
+const searchUser = async (req, res) => {
   console.log("getUserByEmail");
-  const email = req.body.email;
-  User.findByEmail(req.pool, email, function (err, results, fields) {
-    if (err) {
-      res.status(500).json({ err });
-    } else {
-      res.status(200).json(results);
-    }
-  });
+  const results = await User.findOne(req.pool, { email: req.body.email });
+  res.status(200).json(results);
 };
 const updateUser = (req, res) => {
   User.update(
@@ -83,40 +79,56 @@ const deleteUser = (req, res) => {
 };
 const login = async (req, res) => {
   const email = req.body.email;
-  const results = await User.login(req.pool, req.body);
-  console.log(results);
-  if (results.length == 0) {
-    res.status(401).json({ err: "user not found" });
-    return;
+  try {
+    const results = await User.findOne(req.pool, { email: email });
+
+    console.log(results);
+    if (results.length == 0) {
+      res.status(401).json({ err: "user not found" });
+      return;
+    }
+    const user = results[0];
+    console.log(user);
+    const correctPassword = await bcrypt.compare(
+      req.body.password,
+      user.password
+    );
+    if (!correctPassword) {
+      res.status(401).json({ err: "user not found" });
+      return;
+    }
+    const userToken = jwt.sign(
+      {
+        id: user.id,
+      },
+      process.env.SECRET_KEY
+    );
+    res
+      .cookie("usertoken", userToken, process.env.SECRET_KEY, {
+        httpOnly: true,
+      })
+      .json({ msg: "login success!" });
+  } catch (err) {
+    //res.status(500).json({ err });
+    console.log(err);
   }
-  const user = results[0];
-  console.log(user);
-  const correctPassword = await bcrypt.compare(
-    req.body.password,
-    user.password
-  );
-  if (!correctPassword) {
-    res.status(401).json({ err: "user not found" });
-  }
-  const userToken = jwt.sign(
-    {
-      id: user.id,
-    },
-    process.env.SECRET_KEY
-  );
-  res
-    .cookie("usertoken", userToken, process.env.SECRET_KEY, {
-      httpOnly: true,
-    })
-    .json({ msg: "login success!" });
 };
 const logout = (req, res) => {
   console.log("user logout");
   res.clearCookie("usertoken");
   res.status(200).json({ msg: "logout" });
 };
+const getLoggedInUser = async (req, res) => {
+  const decodeJwt = jwt.decode(req.cookie.userToken, { complete: true });
+  const results = await User.findOne(req.pool, { id: decodeJwt.payload.id });
+  if (results.length == 0) {
+    res.status(401).json({ err: "invalid access" });
+  } else {
+    res.status(200).json(results);
+  }
+};
 module.exports = {
-  createUser,
+  register,
   getUsers,
   getUser,
   searchUser,

@@ -35,30 +35,13 @@ const find = (pool, callback) => {
     connection.release();
   });
 };
-const findOne = (pool, id, callback) => {
-  console.log(`select id=${id}`);
-  sql = "SELECT * FROM users where id=?";
-  pool.getConnection(function (err, connection) {
-    connection.query(sql, id, callback);
-    connection.release();
-  });
-};
-const findByEmail = (pool, email, callback) => {
-  console.log("select by email");
-  sql = "SELECT * FROM users where email=?";
-  pool.getConnection(function (err, connection) {
-    connection.query(sql, email, callback);
-    connection.release();
-  });
-};
-const login = (pool, data) => {
+const findOne = (pool, data) => {
   return new Promise((resolve, reject) => {
-    console.log("login");
+    console.log("findOne");
     console.log(data);
-    email = data.email;
-    sql = "SELECT * FROM users WHERE email=?";
+    sql = "SELECT * FROM users WHERE ?";
     pool.getConnection(function (err, connection) {
-      connection.query(sql, email, (err, results) => {
+      connection.query(sql, data, (err, results) => {
         connection.release();
         if (err) {
           reject(err);
@@ -67,6 +50,14 @@ const login = (pool, data) => {
         }
       });
     });
+  });
+};
+const findByEmail = (pool, email, callback) => {
+  console.log("select by email");
+  sql = "SELECT * FROM users where email=?";
+  pool.getConnection(function (err, connection) {
+    connection.query(sql, email, callback);
+    connection.release();
   });
 };
 const update = (pool, data, id, callback) => {
@@ -92,5 +83,4 @@ module.exports = {
   findByEmail,
   update,
   remove,
-  login,
 };
