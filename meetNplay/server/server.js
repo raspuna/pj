@@ -1,5 +1,4 @@
 require("dotenv").config();
-const mysql = require("mysql");
 const cookieParser = require("cookie-parser");
 
 const express = require("express");
