@@ -18,8 +18,13 @@ const getFriends = async (req, res) => {
   console.log("select friends");
   const decodeJwt = jwt.decode(req.cookies.usertoken, { complete: true });
   const data = decodeJwt.payload.id;
-  const results = await Friend.find(req.pool, data);
-  res.status(200).json(results);
+  try {
+    const results = await Friend.find(req.pool, data);
+    res.status(200).json(results);
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ err: "database err" });
+  }
 };
 module.exports = {
   createFriend,

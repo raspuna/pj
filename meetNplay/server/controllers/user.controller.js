@@ -123,12 +123,17 @@ const logout = (req, res) => {
   res.status(200).json({ msg: "logout" });
 };
 const getLoggedInUser = async (req, res) => {
-  const decodeJwt = jwt.decode(req.cookie.userToken, { complete: true });
-  const results = await User.findOne(req.pool, { id: decodeJwt.payload.id });
-  if (results.length == 0) {
-    res.status(401).json({ err: "invalid access" });
-  } else {
-    res.status(200).json(results);
+  const decodeJwt = jwt.decode(req.cookies.usertoken, { complete: true });
+  try {
+    const results = await User.findOne(req.pool, { id: decodeJwt.payload.id });
+    if (results.length == 0) {
+      res.status(401).json({ err: "invalid access" });
+    } else {
+      res.status(200).json(results);
+    }
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ err: "get logged in user " });
   }
 };
 module.exports = {

@@ -1,9 +1,24 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 function Logout() {
   const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_SERVER_ADDRESS}/api/user/getLoggedInUser`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        //console.log({ user });
+        //todo : error handling?
+        setUser(res.data[0]);
+      })
+      .catch((err) => {
+        console.log("Can't get logged in user", err);
+      });
+  }, []);
   const logoutHandler = (e) => {
     e.preventDefault();
     axios
@@ -22,7 +37,7 @@ function Logout() {
   };
   return (
     <div>
-      <Link to="#">Hello!</Link>|
+      <Link to="#">Hello! {user && user.name}</Link>|
       <Link to="#" onClick={logoutHandler}>
         Logout
       </Link>
