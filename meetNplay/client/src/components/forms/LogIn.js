@@ -15,7 +15,13 @@ function LogIn() {
   const submitHandler = (e) => {
     e.preventDefault();
     axios
-      .post(`${process.env.REACT_APP_SERVER_ADDRESS}/api/user/login`, loginInfo)
+      .post(
+        `${process.env.REACT_APP_SERVER_ADDRESS}/api/user/login`,
+        loginInfo,
+        {
+          withCredentials: true,
+        }
+      )
       .then((res) => {
         console.log(res);
         console.log("success");

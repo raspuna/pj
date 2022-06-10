@@ -17,6 +17,7 @@ app.use(function (req, res, next) {
   next();
 });
 require("./routes/user.routes")(app);
+require("./routes/friend.routes")(app);
 
 app.listen(PORT, () => {
   console.log(`Server is running on ${PORT}`);

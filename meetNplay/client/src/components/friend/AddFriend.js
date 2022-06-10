@@ -11,6 +11,29 @@ function AddFriend() {
   const [friend, setFriend] = useState(null);
   const [error, setError] = useState("");
 
+  const addFriendHandler = (e) => {
+    if (!friend) {
+      console.log("???");
+      return;
+    }
+    e.preventDefault();
+    console.log("dosomethin");
+    axios
+      .post(
+        `${process.env.REACT_APP_SERVER_ADDRESS}/api/friends`,
+        {
+          friend_id: friend.id,
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        console.log(res);
+        setFriend(null);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const submitHandler = (e) => {
     e.preventDefault();
     axios
@@ -33,6 +56,9 @@ function AddFriend() {
         }
       })
       .catch((err) => {
+        if (err.response && err.response.status == 401) {
+          setError("Unauthorized");
+        }
         console.log(err);
       });
   };
@@ -66,10 +92,11 @@ function AddFriend() {
       </div>
       <div>
         {friend && (
-          <div>
-            {friend.name}
-            <Button>Add</Button>
-          </div>
+          <Form onSubmit={addFriendHandler}>
+            <Form.Label>{friend.name}</Form.Label>
+            <Form.Control type="hidden" value={friend.id} name="friend_id" />
+            <Button type="submit">Add</Button>
+          </Form>
         )}
       </div>
     </div>

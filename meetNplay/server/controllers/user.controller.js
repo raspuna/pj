@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const User = require("../models/user.models");
+const User = require("../models/user.model");
 
 const register = async (req, res) => {
   const encryptedPassword = await bcrypt.hash(req.body.password, 10);
@@ -51,8 +51,12 @@ const getUser = (req, res) => {
 };
 const searchUser = async (req, res) => {
   console.log("getUserByEmail");
-  const results = await User.findOne(req.pool, { email: req.body.email });
-  res.status(200).json(results);
+  try {
+    const results = await User.findOne(req.pool, { email: req.body.email });
+    res.status(200).json(results);
+  } catch (err) {
+    res.status(500).json({ err });
+  }
 };
 const updateUser = (req, res) => {
   User.update(
@@ -104,12 +108,12 @@ const login = async (req, res) => {
       process.env.SECRET_KEY
     );
     res
-      .cookie("usertoken", userToken, process.env.SECRET_KEY, {
+      .cookie("usertoken", userToken, {
+        expires: new Date(Date.now() + 1000000),
         httpOnly: true,
       })
       .json({ msg: "login success!" });
   } catch (err) {
-    //res.status(500).json({ err });
     console.log(err);
   }
 };
@@ -136,4 +140,5 @@ module.exports = {
   deleteUser,
   login,
   logout,
+  getLoggedInUser,
 };
