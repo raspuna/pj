@@ -7,10 +7,13 @@ function Logout() {
   const logoutHandler = (e) => {
     e.preventDefault();
     axios
-      .get(`${process.env.REACT_APP_SERVER_ADDRESS}/api/user/logout`)
+      .get(`${process.env.REACT_APP_SERVER_ADDRESS}/api/user/logout`, {
+        withCredentials: true,
+      })
       .then((res) => {
         console.log(res);
         console.log("success");
+
         navigate("/");
       })
       .catch((err) => {
