@@ -8,25 +8,24 @@ const register = async (req, res) => {
     ...req.body,
     password: encryptedPassword,
   };
-  User.create(user, function (err) {
-    if (err) {
-      console.log(err);
-      res.status(500).json({ err });
-    } else {
-      const userToken = jwt.sign(
-        {
-          id: req.body.id,
-        },
-        process.env.SECRET_KEY
-      );
-      res
-        .status(200)
-        .cookie("usertoken", userToken, {
-          httpOnly: true,
-        })
-        .json(req.body);
-    }
-  });
+  try {
+    const result = await User.create(user);
+    const userToken = jwt.sign(
+      {
+        id: result.insertId,
+      },
+      process.env.SECRET_KEY
+    );
+    res
+      .status(200)
+      .cookie("usertoken", userToken, {
+        httpOnly: true,
+      })
+      .json(req.body);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ err });
+  }
 };
 const getUsers = (req, res) => {
   User.find(function (err, results, fields) {
