@@ -22,7 +22,6 @@ const register = async (req, res) => {
       res
         .status(200)
         .cookie("usertoken", userToken, {
-          expires: new Date(Date.now() + 1000000),
           httpOnly: true,
         })
         .json(req.body);
@@ -109,7 +108,6 @@ const login = async (req, res) => {
     );
     res
       .cookie("usertoken", userToken, {
-        expires: new Date(Date.now() + 1000000),
         httpOnly: true,
       })
       .json({ msg: "login success!" });
