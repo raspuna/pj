@@ -29,7 +29,7 @@ function FriendList() {
         </thead>
         <tbody>
           {friends.map((friend) => (
-            <tr>
+            <tr key={friend.id}>
               <td>{friend.name}</td>
               <td>{friend.email}</td>
               <td>DELETE</td>
