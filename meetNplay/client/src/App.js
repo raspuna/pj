@@ -5,6 +5,8 @@ import NewUser from "./components/NewUser";
 import Home from "./components/Home";
 import FriendList from "./components/friend/FriendList";
 import AddFriend from "./components/friend/AddFriend";
+import PlaydateList from "./components/playdate/PlaydateList";
+import NewPlaydate from "./components/playdate/New";
 
 function App() {
   return (
@@ -16,6 +18,10 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/friends" element={<FriendList />} />
           <Route path="/newFriend" element={<AddFriend />} />
+
+          <Route path="/playdates" element={<PlaydateList />} />
+
+          <Route path="/newPlaydate" element={<NewPlaydate />} />
         </Routes>
       </BrowserRouter>
     </div>
