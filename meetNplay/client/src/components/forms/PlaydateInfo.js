@@ -6,21 +6,14 @@ import Button from "react-bootstrap/Button";
 import "react-datepicker/dist/react-datepicker.css";
 import GMap from "../GoogleMap";
 
-//let center = new google.maps.LatLng(34.052235, -118.243683);
-function PlaydateInfo() {
+function PlaydateInfo(props) {
   const [place, setPlace] = useState("");
   const [startDate, setStartDate] = useState(new Date());
   const [startTime, setStartTime] = useState(new Date());
   let e = new Date();
   e.setHours(e.getHours() + 2);
   const [endTime, setEndTime] = useState(e);
-  const [playdate, setPlaydate] = useState({
-    title: "",
-    date: "",
-    startTime: "",
-    endTime: "",
-    place: "",
-  });
+  const { playdate, setPlaydate } = props;
   const [dateDay, setDateDay] = useState({
     y: new Date().getYear(),
     m: new Date().getMonth(),
@@ -45,7 +38,9 @@ function PlaydateInfo() {
     playdate.startTime = startTime;
     playdate.endTime = endTime;
     playdate.place = place;
+    setPlaydate(playdate);
     console.log(playdate);
+    props.submitHandler(playdate);
   };
   const changeHandler = (e) => {
     console.log(e);

@@ -31,7 +31,6 @@ function createMarker(place) {
 function GoogleMap(props) {
   const { place, setPlace } = props;
   const [query, setQuery] = useState("");
-  const [address, setAddress] = useState("");
   const changeHandler = (e) => {
     setQuery(e.target.value);
   };
@@ -58,8 +57,7 @@ function GoogleMap(props) {
 
             console.log(results[i]);
           }
-          setAddress(results[0].formatted_address);
-          setPlace(results[0].name);
+          setPlace(results[0].formatted_address);
           map.setCenter(results[0].geometry.location);
         } else {
           console.log("map query error");
@@ -81,7 +79,7 @@ function GoogleMap(props) {
         </div>
         <div ref={ref} id="map" style={containerStyle} />
         <Form.Label>Place:</Form.Label>
-        <Form.Control type="text" value={address} name="address" />
+        <Form.Control type="text" value={place} name="place" readOnly />
       </Form>
     </>
   );
