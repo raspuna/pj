@@ -12,8 +12,20 @@ const createPlaydate = async (req, res) => {
     host_id: decodeJwt.payload.id,
   };
   try {
-    const result = Playdate.create(data);
+    const result = await Playdate.create(data);
     res.status(200).json(result);
+  } catch (e) {
+    console.log("in createPlaydate", e);
+    res.status(500).json({ err: "database err" });
+  }
+};
+const getPlaydates = async (req, res) => {
+  const decodeJwt = jwt.decode(req.cookies.usertoken, { complete: true });
+  const id = decodeJwt.payload.id;
+  try {
+    const results = await Playdate.find(id);
+    console.log(results);
+    res.status(200).json(results);
   } catch (e) {
     console.log(e);
     res.status(500).json({ err: "database err" });
@@ -21,4 +33,5 @@ const createPlaydate = async (req, res) => {
 };
 module.exports = {
   createPlaydate,
+  getPlaydates,
 };

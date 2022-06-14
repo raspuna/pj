@@ -3,4 +3,5 @@ const { authenticate } = require("../config/jwt.config");
 
 module.exports = (app) => {
   app.post("/api/playdates", authenticate, PlaydateController.createPlaydate);
+  app.get("/api/playdates", authenticate, PlaydateController.getPlaydates);
 };

@@ -4,4 +4,9 @@ const create = async (data) => {
   sql = "INSERT INTO playdates SET ?";
   return await query(sql, data);
 };
-module.exports = { create };
+const find = (data) => {
+  console.log("find playdates");
+  sql = "SELECT * FROM playdates WHERE host_id =? ";
+  return query(sql, data);
+};
+module.exports = { create, find };
