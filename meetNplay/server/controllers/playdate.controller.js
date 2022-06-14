@@ -31,7 +31,19 @@ const getPlaydates = async (req, res) => {
     res.status(500).json({ err: "database err" });
   }
 };
+const getPlaydate = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const result = await Playdate.findOne(id);
+    console.log(result);
+    res.status(200).json(result[0]);
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ err: "database err" });
+  }
+};
 module.exports = {
   createPlaydate,
   getPlaydates,
+  getPlaydate,
 };

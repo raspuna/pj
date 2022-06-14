@@ -9,4 +9,9 @@ const find = (data) => {
   sql = "SELECT * FROM playdates WHERE host_id =? ";
   return query(sql, data);
 };
-module.exports = { create, find };
+const findOne = (data) => {
+  console.log("findOne playdate");
+  sql = "SELECT * FROM playdates WHERE id =? ";
+  return query(sql, data);
+};
+module.exports = { create, find, findOne };
