@@ -28,8 +28,10 @@ function createMarker(place) {
   });
 }
 
-function GoogleMap(center) {
+function GoogleMap(props) {
+  const { place, setPlace } = props;
   const [query, setQuery] = useState("");
+  const [address, setAddress] = useState("");
   const changeHandler = (e) => {
     setQuery(e.target.value);
   };
@@ -46,16 +48,18 @@ function GoogleMap(center) {
       infowindow = new google.maps.InfoWindow();
       const request = {
         query: query,
-        fields: ["name", "geometry"],
+        fields: ["name", "geometry", "formatted_address"],
       };
       const service = new google.maps.places.PlacesService(map);
       service.findPlaceFromQuery(request, (results, stat) => {
         if (stat === google.maps.places.PlacesServiceStatus.OK && results) {
-          console.log(results);
           for (let i = 0; i < results.length; i++) {
             createMarker(results[i]);
-          }
 
+            console.log(results[i]);
+          }
+          setAddress(results[0].formatted_address);
+          setPlace(results[0].name);
           map.setCenter(results[0].geometry.location);
         } else {
           console.log("map query error");
@@ -65,16 +69,19 @@ function GoogleMap(center) {
   };
   return (
     <>
-      <div ref={ref} id="map" style={containerStyle} />
       <Form>
+        <div className="d-flex">
+          <Form.Control
+            type="text"
+            value={query}
+            name="query"
+            onChange={changeHandler}
+          />
+          <button onClick={reDraw}>search</button>
+        </div>
+        <div ref={ref} id="map" style={containerStyle} />
         <Form.Label>Place:</Form.Label>
-        <Form.Control
-          type="text"
-          value={query}
-          name="query"
-          onChange={changeHandler}
-        />
-        <button onClick={reDraw}>xptmxm</button>
+        <Form.Control type="text" value={address} name="address" />
       </Form>
     </>
   );

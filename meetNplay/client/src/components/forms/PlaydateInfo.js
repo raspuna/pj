@@ -8,6 +8,7 @@ import GMap from "../GoogleMap";
 
 //let center = new google.maps.LatLng(34.052235, -118.243683);
 function PlaydateInfo() {
+  const [place, setPlace] = useState("");
   const [startDate, setStartDate] = useState(new Date());
   const [startTime, setStartTime] = useState(new Date());
   let e = new Date();
@@ -43,6 +44,8 @@ function PlaydateInfo() {
     console.log({ endTime });
     playdate.startTime = startTime;
     playdate.endTime = endTime;
+    playdate.place = place;
+    console.log(playdate);
   };
   const changeHandler = (e) => {
     console.log(e);
@@ -59,7 +62,7 @@ function PlaydateInfo() {
   return (
     <div>
       <h1>New Playdate</h1>
-      <GMap></GMap>
+      <GMap place={place} setPlace={setPlace}></GMap>
       <Form onSubmit={submitHandler}>
         <FormGroup>
           <Form.Label>Title:</Form.Label>
