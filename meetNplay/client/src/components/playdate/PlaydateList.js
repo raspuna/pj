@@ -25,7 +25,9 @@ function PlaydateList() {
       <p>upcoming({playdates.length})</p>
       {playdates.map((p) => (
         <p>
-          <p>{p.title}</p>
+          <p>
+            <Link to={`/playdate/${p.id}`}> {p.title}</Link>
+          </p>
           <p>{p.start_time}</p>
         </p>
       ))}

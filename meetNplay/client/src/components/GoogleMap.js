@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Form from "react-bootstrap/Form";
 import { Loader } from "@googlemaps/js-api-loader";
 
@@ -29,15 +29,14 @@ function createMarker(place) {
 }
 
 function GoogleMap(props) {
-  const { place, setPlace } = props;
-  const [query, setQuery] = useState("");
+  const { place, setPlace, showSearchBar } = props;
+  const [query, setQuery] = useState(place ? place : "");
+  const [queryIsDone, setQueryIsDone] = useState(place ? true : false);
   const changeHandler = (e) => {
     setQuery(e.target.value);
   };
   const ref = useRef();
-
-  const reDraw = (e) => {
-    e.preventDefault();
+  const mapDraw = () => {
     containerStyle = { height: "400px" };
     loader.load().then((google) => {
       map = new google.maps.Map(ref.current, {
@@ -64,22 +63,37 @@ function GoogleMap(props) {
         }
       });
     });
+    setQueryIsDone(false);
+  };
+  useEffect(() => {
+    console.log(query);
+    console.log({ place });
+    if (query && queryIsDone) {
+      mapDraw();
+    }
+  }, [query, place]);
+
+  const reDraw = (e) => {
+    e.preventDefault();
+    mapDraw();
   };
   return (
     <>
       <Form>
         <div className="d-flex">
-          <Form.Control
-            type="text"
-            value={query}
-            name="query"
-            onChange={changeHandler}
-          />
-          <button onClick={reDraw}>search</button>
+          {showSearchBar && (
+            <>
+              <Form.Control
+                type="text"
+                value={query}
+                name="query"
+                onChange={changeHandler}
+              />
+              <button onClick={reDraw}>search</button>
+            </>
+          )}
         </div>
         <div ref={ref} id="map" style={containerStyle} />
-        <Form.Label>Place:</Form.Label>
-        <Form.Control type="text" value={place} name="place" readOnly />
       </Form>
     </>
   );

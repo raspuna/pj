@@ -57,7 +57,7 @@ function PlaydateInfo(props) {
   return (
     <div>
       <h1>New Playdate</h1>
-      <GMap place={place} setPlace={setPlace}></GMap>
+      <GMap place={place} setPlace={setPlace} showSearchBar={true}></GMap>
       <Form onSubmit={submitHandler}>
         <FormGroup>
           <Form.Label>Title:</Form.Label>
@@ -68,7 +68,10 @@ function PlaydateInfo(props) {
             onChange={changeHandler}
           />
         </FormGroup>
-
+        <FormGroup>
+          <Form.Label>Place:</Form.Label>
+          <Form.Control type="text" value={place} name="place" readOnly />
+        </FormGroup>
         <FormGroup>
           <Form.Label>Date:</Form.Label>
           <DatePicker
