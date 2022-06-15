@@ -24,14 +24,13 @@ function PlaydateList() {
       <Link to="/newPlaydate">New Playdate</Link>
       <p>upcoming({playdates.length})</p>
       {playdates.map((p) => (
-        <p>
-          <p>
-            <Link to={`/playdate/${p.id}`}> {p.title}</Link>
-          </p>
-          <p>{p.start_time}</p>
+        <p key={p.id}>
+          <Link to={`/playdate/${p.id}`}> {p.title}</Link>
+          {new Date(p.start_time).toLocaleDateString()}
+          {new Date(p.start_time).toLocaleTimeString()} ~
+          {new Date(p.end_time).toLocaleTimeString()}
         </p>
       ))}
-      <p>List</p>
     </div>
   );
 }

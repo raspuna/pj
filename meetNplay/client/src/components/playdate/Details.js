@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import GoogleMap from "../GoogleMap";
 import Header from "../Header";
 
@@ -37,10 +37,24 @@ function Details() {
         />
       )}
       <p> place : {playdate && playdate.place}</p>
-      <p> Date: {playdate && playdate.start_time}</p>
-      <p>start time:{playdate && playdate.start_time}</p>
-      <p>end time:{playdate && playdate.end_time}</p>
-      <p>Edit | Delete</p>
+      <p>
+        {" "}
+        Date: {playdate && new Date(playdate.start_time).toLocaleDateString()}
+      </p>
+      <p>
+        start time:
+        {playdate && new Date(playdate.start_time).toLocaleTimeString()}
+      </p>
+      <p>
+        end time:{playdate && new Date(playdate.end_time).toLocaleTimeString()}
+      </p>
+      <p>
+        {playdate && (
+          <>
+            <Link to={`/playdate/edit/${playdate.id}`}>Edit</Link> | Delete
+          </>
+        )}
+      </p>
     </div>
   );
 }

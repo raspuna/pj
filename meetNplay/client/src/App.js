@@ -7,6 +7,7 @@ import FriendList from "./components/friend/FriendList";
 import AddFriend from "./components/friend/AddFriend";
 import PlaydateList from "./components/playdate/PlaydateList";
 import NewPlaydate from "./components/playdate/New";
+import EditPlaydate from "./components/playdate/Edit";
 import PlaydateDetail from "./components/playdate/Details";
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/playdates" element={<PlaydateList />} />
 
           <Route path="/playdate/:playdateId" element={<PlaydateDetail />} />
+          <Route path="/playdate/edit/:playdateId" element={<EditPlaydate />} />
           <Route path="/newPlaydate" element={<NewPlaydate />} />
         </Routes>
       </BrowserRouter>

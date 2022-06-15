@@ -7,17 +7,24 @@ import "react-datepicker/dist/react-datepicker.css";
 import GMap from "../GoogleMap";
 
 function PlaydateInfo(props) {
-  const [place, setPlace] = useState("");
-  const [startDate, setStartDate] = useState(new Date());
-  const [startTime, setStartTime] = useState(new Date());
-  let e = new Date();
-  e.setHours(e.getHours() + 2);
-  const [endTime, setEndTime] = useState(e);
-  const { playdate, setPlaydate } = props;
+  const {
+    playdate,
+    setPlaydate,
+    place,
+    setPlace,
+    startDate,
+    setStartDate,
+    startTime,
+    setStartTime,
+    endTime,
+    setEndTime,
+    buttonText,
+  } = props;
+
   const [dateDay, setDateDay] = useState({
-    y: new Date().getYear(),
-    m: new Date().getMonth(),
-    d: new Date().getDate(),
+    y: startDate.getFullYear(),
+    m: startDate.getMonth(),
+    d: startDate.getDate(),
   });
   const submitHandler = (e) => {
     e.preventDefault();
@@ -56,8 +63,9 @@ function PlaydateInfo(props) {
   };
   return (
     <div>
-      <h1>New Playdate</h1>
-      <GMap place={place} setPlace={setPlace} showSearchBar={true}></GMap>
+      {false && (
+        <GMap place={place} setPlace={setPlace} showSearchBar={true}></GMap>
+      )}
       <Form onSubmit={submitHandler}>
         <FormGroup>
           <Form.Label>Title:</Form.Label>
@@ -106,7 +114,7 @@ function PlaydateInfo(props) {
             dateFormat="h:mm aa"
           />
         </FormGroup>
-        <Button type="submit">Make a Playdate</Button>
+        <Button type="submit">{buttonText}</Button>
       </Form>
     </div>
   );
