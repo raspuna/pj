@@ -45,7 +45,7 @@ const getPlaydate = async (req, res) => {
 const updatePlaydate = async (req, res) => {
   const decodeJwt = jwt.decode(req.cookies.usertoken, { complete: true });
   try {
-    const result = await Playdate.findOne(req.body.id);
+    const result = await Playdate.findOne(req.params.id);
     const playdate = result[0];
     console.log(playdate);
     console.log("hostid:", playdate.host_id, " cookieid", decodeJwt.payload.id);
@@ -56,6 +56,7 @@ const updatePlaydate = async (req, res) => {
   } catch (e) {
     console.log(e);
     res.status(500).json({ err: "database err" });
+    return;
   }
 
   const start = new Date(Date.parse(req.body.startTime));
@@ -67,8 +68,34 @@ const updatePlaydate = async (req, res) => {
     end_time: end,
   };
   try {
-    const result = await Playdate.update(data, req.body.id);
+    const result = await Playdate.update(data, req.params.id);
 
+    console.log(result);
+    res.status(200).json(result[0]);
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ err: "database err" });
+  }
+};
+const deletePlaydate = async (req, res) => {
+  console.log("delete ");
+  const decodeJwt = jwt.decode(req.cookies.usertoken, { complete: true });
+  try {
+    const result = await Playdate.findOne(req.params.id);
+    const playdate = result[0];
+    console.log(playdate);
+    console.log("hostid:", playdate.host_id, " cookieid", decodeJwt.payload.id);
+    if (playdate.host_id != decodeJwt.payload.id) {
+      res.status(403).json({ err: "unauthorized" });
+      return;
+    }
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ err: "database err" });
+    return;
+  }
+  try {
+    const result = await Playdate.remove(req.params.id);
     console.log(result);
     res.status(200).json(result[0]);
   } catch (e) {
@@ -81,4 +108,5 @@ module.exports = {
   getPlaydates,
   getPlaydate,
   updatePlaydate,
+  deletePlaydate,
 };

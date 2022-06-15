@@ -6,4 +6,9 @@ module.exports = (app) => {
   app.get("/api/playdates", authenticate, PlaydateController.getPlaydates);
   app.get("/api/playdate/:id", authenticate, PlaydateController.getPlaydate);
   app.put("/api/playdate/:id", authenticate, PlaydateController.updatePlaydate);
+  app.delete(
+    "/api/playdate/:id",
+    authenticate,
+    PlaydateController.deletePlaydate
+  );
 };

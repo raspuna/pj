@@ -6,7 +6,7 @@ const create = async (data) => {
 };
 const find = (data) => {
   console.log("find playdates");
-  sql = "SELECT * FROM playdates WHERE host_id =? ";
+  sql = "SELECT * FROM playdates WHERE host_id =? ORDER BY start_time";
   return query(sql, data);
 };
 const findOne = (data) => {
@@ -19,4 +19,9 @@ const update = (data, id) => {
   sql = "UPDATE playdates SET ? WHERE id =?";
   return query(sql, [data, id]);
 };
-module.exports = { create, find, findOne, update };
+const remove = (id) => {
+  console.log("delete");
+  sql = "DELETE FROM playdates WHERE id =?";
+  return query(sql, id);
+};
+module.exports = { create, find, findOne, update, remove };
