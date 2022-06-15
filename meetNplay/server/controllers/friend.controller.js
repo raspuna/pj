@@ -26,7 +26,20 @@ const getFriends = async (req, res) => {
     res.status(500).json({ err: "database err" });
   }
 };
+const getFriendsInvited = async (req, res) => {
+  console.log("select friends");
+  const decodeJwt = jwt.decode(req.cookies.usertoken, { complete: true });
+  const data = [req.params.playdateId, decodeJwt.payload.id];
+  try {
+    const results = await Friend.findInvited(data);
+    res.status(200).json(results);
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ err: "database err" });
+  }
+};
 module.exports = {
   createFriend,
   getFriends,
+  getFriendsInvited,
 };

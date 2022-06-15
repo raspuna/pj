@@ -13,6 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 require("./routes/user.routes")(app);
 require("./routes/friend.routes")(app);
 require("./routes/playdate.routes")(app);
+require("./routes/rsvp.routes")(app);
 
 app.listen(PORT, () => {
   console.log(`Server is running on ${PORT}`);
