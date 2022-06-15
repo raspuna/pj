@@ -5,4 +5,5 @@ module.exports = (app) => {
   app.post("/api/playdates", authenticate, PlaydateController.createPlaydate);
   app.get("/api/playdates", authenticate, PlaydateController.getPlaydates);
   app.get("/api/playdate/:id", authenticate, PlaydateController.getPlaydate);
+  app.put("/api/playdate/:id", authenticate, PlaydateController.updatePlaydate);
 };

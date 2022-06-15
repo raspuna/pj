@@ -14,4 +14,9 @@ const findOne = (data) => {
   sql = "SELECT * FROM playdates WHERE id =? ";
   return query(sql, data);
 };
-module.exports = { create, find, findOne };
+const update = (data, id) => {
+  console.log("update");
+  sql = "UPDATE playdates SET ? WHERE id =?";
+  return query(sql, [data, id]);
+};
+module.exports = { create, find, findOne, update };

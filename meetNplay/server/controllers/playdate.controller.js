@@ -42,8 +42,43 @@ const getPlaydate = async (req, res) => {
     res.status(500).json({ err: "database err" });
   }
 };
+const updatePlaydate = async (req, res) => {
+  const decodeJwt = jwt.decode(req.cookies.usertoken, { complete: true });
+  try {
+    const result = await Playdate.findOne(req.body.id);
+    const playdate = result[0];
+    console.log(playdate);
+    console.log("hostid:", playdate.host_id, " cookieid", decodeJwt.payload.id);
+    if (playdate.host_id != decodeJwt.payload.id) {
+      res.status(403).json({ err: "unauthorized" });
+      return;
+    }
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ err: "database err" });
+  }
+
+  const start = new Date(Date.parse(req.body.startTime));
+  const end = new Date(Date.parse(req.body.endTime));
+  const data = {
+    title: req.body.title,
+    place: req.body.place,
+    start_time: start,
+    end_time: end,
+  };
+  try {
+    const result = await Playdate.update(data, req.body.id);
+
+    console.log(result);
+    res.status(200).json(result[0]);
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ err: "database err" });
+  }
+};
 module.exports = {
   createPlaydate,
   getPlaydates,
   getPlaydate,
+  updatePlaydate,
 };
