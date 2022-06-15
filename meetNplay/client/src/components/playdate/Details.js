@@ -1,10 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import GoogleMap from "../GoogleMap";
 import Header from "../Header";
+import DeleteButton from "./Delete";
 
 function Details() {
+  const navigate = useNavigate();
   const { playdateId } = useParams();
   const [playdate, setPlaydate] = useState(null);
   const [place, setPlace] = useState("");
@@ -51,7 +53,11 @@ function Details() {
       <p>
         {playdate && (
           <>
-            <Link to={`/playdate/edit/${playdate.id}`}>Edit</Link> | Delete
+            <Link to={`/playdate/edit/${playdate.id}`}>Edit</Link> |
+            <DeleteButton
+              playdateId={playdate.id}
+              callbackFunction={() => navigate(`/playdates`)}
+            ></DeleteButton>
           </>
         )}
       </p>
