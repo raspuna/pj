@@ -42,20 +42,27 @@ const getPlaydate = async (req, res) => {
     res.status(500).json({ err: "database err" });
   }
 };
-const updatePlaydate = async (req, res) => {
+const authorizePlaydate = async (playdateId, req, res) => {
   const decodeJwt = jwt.decode(req.cookies.usertoken, { complete: true });
   try {
-    const result = await Playdate.findOne(req.params.id);
+    const result = await Playdate.findOne(playdateId);
     const playdate = result[0];
     console.log(playdate);
     console.log("hostid:", playdate.host_id, " cookieid", decodeJwt.payload.id);
     if (playdate.host_id != decodeJwt.payload.id) {
       res.status(403).json({ err: "unauthorized" });
-      return;
+      return false;
     }
   } catch (e) {
     console.log(e);
     res.status(500).json({ err: "database err" });
+    return false;
+  }
+  return true;
+};
+
+const updatePlaydate = async (req, res) => {
+  if (!(await authorizePlaydate(req.params.id, req, res))) {
     return;
   }
 
@@ -79,19 +86,7 @@ const updatePlaydate = async (req, res) => {
 };
 const deletePlaydate = async (req, res) => {
   console.log("delete ");
-  const decodeJwt = jwt.decode(req.cookies.usertoken, { complete: true });
-  try {
-    const result = await Playdate.findOne(req.params.id);
-    const playdate = result[0];
-    console.log(playdate);
-    console.log("hostid:", playdate.host_id, " cookieid", decodeJwt.payload.id);
-    if (playdate.host_id != decodeJwt.payload.id) {
-      res.status(403).json({ err: "unauthorized" });
-      return;
-    }
-  } catch (e) {
-    console.log(e);
-    res.status(500).json({ err: "database err" });
+  if (!(await authorizePlaydate(req.params.id, req, res))) {
     return;
   }
   try {
@@ -109,4 +104,5 @@ module.exports = {
   getPlaydate,
   updatePlaydate,
   deletePlaydate,
+  authorizePlaydate,
 };
