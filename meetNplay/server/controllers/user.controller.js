@@ -52,7 +52,10 @@ const searchUser = async (req, res) => {
   const decodeJwt = jwt.decode(req.cookies.usertoken, { complete: true });
   try {
     const results = await User.findOne({ email: req.body.email });
-    if (results[0].id === decodeJwt.payload.id) {
+    if (results.length == 0) {
+      res.status(400).json({ err: "The email is not a signed user" });
+      return;
+    } else if (results[0].id === decodeJwt.payload.id) {
       res
         .status(400)
         .json({ err: "It is impossible to add yourself to a friend" });
@@ -60,6 +63,7 @@ const searchUser = async (req, res) => {
     }
     res.status(200).json(results);
   } catch (err) {
+    console.log("in searchUser", err);
     res.status(500).json({ err });
   }
 };

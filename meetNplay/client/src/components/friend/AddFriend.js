@@ -46,12 +46,7 @@ function AddFriend() {
       )
       .then((res) => {
         console.log(res);
-        if (res.data.length > 0) {
-          setFriend(res.data[0]);
-        } else {
-          setFriend(null);
-          setError("The email is not a signed user");
-        }
+        setFriend(res.data[0]);
       })
       .catch((err) => {
         if (err.response && err.response.status == 401) {
