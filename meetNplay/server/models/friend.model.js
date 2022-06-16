@@ -12,14 +12,19 @@ const find = async (data) => {
   return await query(sql, data);
 };
 const findInvited = (data) => {
-  console.log("test");
   sql = `SELECT friend_id as id, u.name, u.email, r.rsvp_status FROM friendships f 
-    JOIN users u ON friend_id = id 
- LEFT JOIN rsvps r ON r.user_id=friend_id AND r.playdate_id = ? WHERE f.user_id = ?`;
+        JOIN users u ON friend_id = id 
+        LEFT JOIN rsvps r ON r.user_id=friend_id AND r.playdate_id = ? WHERE f.user_id = ?`;
   return query(sql, data);
 };
+const remove = (data, id) => {
+  sql = "DELETE FROM friendships WHERE friend_id=? AND user_id=?";
+  return query(sql, [data, id]);
+};
+
 module.exports = {
   create,
   find,
   findInvited,
+  remove,
 };

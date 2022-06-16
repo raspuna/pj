@@ -38,8 +38,21 @@ const getFriendsInvited = async (req, res) => {
     res.status(500).json({ err: "database err" });
   }
 };
+const deleteFriend = async (req, res) => {
+  console.log("delete friend");
+  const decodeJwt = jwt.decode(req.cookies.usertoken, { complete: true });
+  try {
+    const result = await Friend.remove(req.params.id, decodeJwt.payload.id);
+    console.log(result);
+    res.status(200).json(result[0]);
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ err: "database err" });
+  }
+};
 module.exports = {
   createFriend,
   getFriends,
   getFriendsInvited,
+  deleteFriend,
 };

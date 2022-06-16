@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../Header";
+import DeleteFriend from "./Delete";
 
 function FriendList() {
   const [friends, setFriends] = useState([]);
@@ -32,7 +33,13 @@ function FriendList() {
             <tr key={friend.id}>
               <td>{friend.name}</td>
               <td>{friend.email}</td>
-              <td>DELETE</td>
+              <td>
+                <DeleteFriend
+                  id={friend.id}
+                  friends={friends}
+                  setFriends={setFriends}
+                />
+              </td>
             </tr>
           ))}
         </tbody>

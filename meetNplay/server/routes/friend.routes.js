@@ -10,5 +10,5 @@ module.exports = (app) => {
   );
   //  app.get('/api/friend/:id', FriendController.getFriend);
   //app.put('/api/friend/:id', FriendController.updateFriend);
-  //app.delete('/api/friend/:id', FriendController.deleteFriend);
+  app.delete("/api/friend/:id", authenticate, FriendController.deleteFriend);
 };
