@@ -56,7 +56,10 @@ function AddFriend() {
       .catch((err) => {
         if (err.response && err.response.status == 401) {
           setError("Unauthorized");
+        } else if (err.response && err.response.status === 400) {
+          setError(err.response.data.err);
         }
+
         console.log(err);
       });
   };

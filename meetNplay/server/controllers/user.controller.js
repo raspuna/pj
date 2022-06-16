@@ -49,8 +49,15 @@ const getUser = (req, res) => {
 };
 const searchUser = async (req, res) => {
   console.log("getUserByEmail");
+  const decodeJwt = jwt.decode(req.cookies.usertoken, { complete: true });
   try {
     const results = await User.findOne({ email: req.body.email });
+    if (results[0].id === decodeJwt.payload.id) {
+      res
+        .status(400)
+        .json({ err: "It is impossible to add yourself to a friend" });
+      return;
+    }
     res.status(200).json(results);
   } catch (err) {
     res.status(500).json({ err });
