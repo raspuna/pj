@@ -30,7 +30,6 @@ const createRSVP = async (req, res) => {
 const replyRSVP = async (req, res) => {
   const decodeJwt = jwt.decode(req.cookies.usertoken, { complete: true });
   const id = decodeJwt.payload.id;
-  console.log(req.body);
   const data = [req.body.rsvp, req.body.playdateId, id];
   try {
     const result = await RSVP.update(data);

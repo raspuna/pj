@@ -6,6 +6,7 @@ import Header from "../Header";
 import DeleteButton from "./Delete";
 import Invite from "../rsvp/Invite";
 import Members from "../rsvp/Members";
+import RsvpButton from "../rsvp/RsvpButton";
 
 function Details() {
   const navigate = useNavigate();
@@ -54,15 +55,18 @@ function Details() {
         end time:{playdate && new Date(playdate.end_time).toLocaleTimeString()}
       </p>
       <p>
-        {playdate && (
-          <>
-            <Link to={`/playdate/edit/${playdate.id}`}>Edit</Link> |
-            <DeleteButton
-              playdateId={playdate.id}
-              callbackFunction={() => navigate(`/playdates`)}
-            ></DeleteButton>
-          </>
-        )}
+        {playdate &&
+          (playdate.isHost ? (
+            <>
+              <Link to={`/playdate/edit/${playdate.id}`}>Edit</Link> |
+              <DeleteButton
+                playdateId={playdate.id}
+                callbackFunction={() => navigate(`/playdates`)}
+              ></DeleteButton>
+            </>
+          ) : (
+            <RsvpButton playdateId={playdate.id} />
+          ))}
       </p>
       {playdate && playdate.isHost && <Invite playdateId={playdate.id} />}
       {playdate && !playdate.isHost && <Members playdateId={playdate.id} />}
