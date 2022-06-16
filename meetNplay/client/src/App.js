@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./components/Index";
 import NewUser from "./components/NewUser";
 import Home from "./components/Home";
+import About from "./components/About";
 import FriendList from "./components/friend/FriendList";
 import AddFriend from "./components/friend/AddFriend";
 import PlaydateList from "./components/playdate/Main";
@@ -18,6 +19,8 @@ function App() {
           <Route exact path="/" element={<Index />} />
           <Route path="/signup" element={<NewUser />} />
           <Route path="/home" element={<Home />} />
+
+          <Route path="/about" element={<About />} />
           <Route path="/friends" element={<FriendList />} />
           <Route path="/newFriend" element={<AddFriend />} />
 
