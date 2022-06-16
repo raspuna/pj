@@ -11,8 +11,6 @@ function Logout() {
         withCredentials: true,
       })
       .then((res) => {
-        //console.log({ user });
-        //todo : error handling?
         setUser(res.data[0]);
       })
       .catch((err) => {
