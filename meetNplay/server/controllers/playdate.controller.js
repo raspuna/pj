@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const Playdate = require("../models/playdate.model");
+const RSVP = require("../models/rsvp.model");
 const createPlaydate = async (req, res) => {
   const decodeJwt = jwt.decode(req.cookies.usertoken, { complete: true });
   const start = new Date(req.body.startTime);
@@ -121,6 +122,7 @@ const deletePlaydate = async (req, res) => {
     return;
   }
   try {
+    await RSVP.remove({ playdate_id: req.params.id });
     const result = await Playdate.remove(req.params.id);
     console.log(result);
     res.status(200).json(result[0]);
