@@ -31,6 +31,18 @@ const getPlaydates = async (req, res) => {
     res.status(500).json({ err: "database err" });
   }
 };
+const getInvitedPlaydates = async (req, res) => {
+  const decodeJwt = jwt.decode(req.cookies.usertoken, { complete: true });
+  const id = decodeJwt.payload.id;
+  try {
+    const results = await Playdate.findInvited(id);
+    console.log(results);
+    res.status(200).json(results);
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ err: "database err" });
+  }
+};
 const getPlaydate = async (req, res) => {
   const id = req.params.id;
   try {
@@ -101,6 +113,7 @@ const deletePlaydate = async (req, res) => {
 module.exports = {
   createPlaydate,
   getPlaydates,
+  getInvitedPlaydates,
   getPlaydate,
   updatePlaydate,
   deletePlaydate,

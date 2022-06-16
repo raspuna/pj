@@ -9,6 +9,12 @@ const find = (data) => {
   sql = "SELECT * FROM playdates WHERE host_id =? ORDER BY start_time";
   return query(sql, data);
 };
+const findInvited = (data) => {
+  console.log("find invited playdate");
+  sql = `SELECT p.*, rsvp_status FROM playdates p 
+  JOIN rsvps r ON p.id = r.playdate_id WHERE r.user_id=? `;
+  return query(sql, data);
+};
 const findOne = (data) => {
   console.log("findOne playdate");
   sql = "SELECT * FROM playdates WHERE id =? ";
@@ -24,4 +30,4 @@ const remove = (id) => {
   sql = "DELETE FROM playdates WHERE id =?";
   return query(sql, id);
 };
-module.exports = { create, find, findOne, update, remove };
+module.exports = { create, find, findInvited, findOne, update, remove };
