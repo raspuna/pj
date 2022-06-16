@@ -5,6 +5,7 @@ import GoogleMap from "../GoogleMap";
 import Header from "../Header";
 import DeleteButton from "./Delete";
 import Invite from "../rsvp/Invite";
+import Members from "../rsvp/Members";
 
 function Details() {
   const navigate = useNavigate();
@@ -63,6 +64,7 @@ function Details() {
         )}
       </p>
       {playdate && <Invite playdateId={playdate.id} />}
+      {playdate && <Members playdateId={playdate.id} />}
     </div>
   );
 }
