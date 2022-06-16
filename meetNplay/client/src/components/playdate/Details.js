@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import GoogleMap from "../GoogleMap";
 import Header from "../Header";
 import DeleteButton from "./Delete";
+import Invite from "../rsvp/Invite";
 
 function Details() {
   const navigate = useNavigate();
@@ -61,6 +62,7 @@ function Details() {
           </>
         )}
       </p>
+      {playdate && <Invite playdateId={playdate.id} />}
     </div>
   );
 }

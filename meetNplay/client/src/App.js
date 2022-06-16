@@ -5,7 +5,7 @@ import NewUser from "./components/NewUser";
 import Home from "./components/Home";
 import FriendList from "./components/friend/FriendList";
 import AddFriend from "./components/friend/AddFriend";
-import PlaydateList from "./components/playdate/PlaydateList";
+import PlaydateList from "./components/playdate/Main";
 import NewPlaydate from "./components/playdate/New";
 import EditPlaydate from "./components/playdate/Edit";
 import PlaydateDetail from "./components/playdate/Details";

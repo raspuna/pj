@@ -63,9 +63,7 @@ function PlaydateInfo(props) {
   };
   return (
     <div>
-      {false && (
-        <GMap place={place} setPlace={setPlace} showSearchBar={true}></GMap>
-      )}
+      <GMap place={place} setPlace={setPlace} showSearchBar={true}></GMap>
       <Form onSubmit={submitHandler}>
         <FormGroup>
           <Form.Label>Title:</Form.Label>

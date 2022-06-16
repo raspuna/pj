@@ -1,13 +1,17 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Header from "../Header";
 
-function PlaydateList() {
+function PlaydateList(props) {
+  const isHost = props.type;
+
   const [playdates, setPlaydates] = useState([]);
   useEffect(() => {
+    const url = isHost
+      ? `${process.env.REACT_APP_SERVER_ADDRESS}/api/playdates`
+      : `${process.env.REACT_APP_SERVER_ADDRESS}/api/playdates/invited`;
     axios
-      .get(`${process.env.REACT_APP_SERVER_ADDRESS}/api/playdates`, {
+      .get(url, {
         withCredentials: true,
       })
       .then((res) => {
@@ -20,12 +24,11 @@ function PlaydateList() {
   }, []);
   return (
     <div>
-      <Header />
-      <Link to="/newPlaydate">New Playdate</Link>
       <p>upcoming({playdates.length})</p>
       {playdates.map((p) => (
         <p key={p.id}>
           <Link to={`/playdate/${p.id}`}> {p.title}</Link>
+          by {p.host_id}
           {new Date(p.start_time).toLocaleDateString()}
           {new Date(p.start_time).toLocaleTimeString()} ~
           {new Date(p.end_time).toLocaleTimeString()}
