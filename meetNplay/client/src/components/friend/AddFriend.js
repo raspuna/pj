@@ -13,11 +13,10 @@ function AddFriend() {
 
   const addFriendHandler = (e) => {
     if (!friend) {
-      console.log("???");
+      console.log("no friend selected");
       return;
     }
     e.preventDefault();
-    console.log("dosomethin");
     axios
       .post(
         `${process.env.REACT_APP_SERVER_ADDRESS}/api/friends`,
@@ -34,6 +33,7 @@ function AddFriend() {
         console.log(err);
       });
   };
+  /* for search a user */
   const submitHandler = (e) => {
     e.preventDefault();
     axios
@@ -47,9 +47,7 @@ function AddFriend() {
       .then((res) => {
         console.log(res);
         if (res.data.length > 0) {
-          console.log(res.data[0]);
           setFriend(res.data[0]);
-          console.log(friend.name);
         } else {
           setFriend(null);
           setError("The email is not a signed user");
