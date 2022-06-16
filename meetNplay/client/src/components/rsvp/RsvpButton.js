@@ -1,26 +1,26 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
-import * as RSVP from "../../constants";
+import * as CONST from "./RsvpText";
 
 function RsvpButton(props) {
   const { playdateId } = props;
   console.log(playdateId, typeof playdateId);
-  const [rsvp, setRsvp] = useState(RSVP.NOT_YET);
+  const [rsvp, setRsvp] = useState(CONST.NOT_YET);
   const [yesButtonColor, setYesButtonColor] = useState("primary");
   const [noButtonColor, setNoButtonColor] = useState("danger");
   const [maybeButtonColor, setMaybeButtonColor] = useState("success");
   const setButtonColor = (rsvpStatus) => {
     console.log(rsvpStatus, typeof rsvpStatus);
-    if (rsvpStatus === RSVP.YES) {
+    if (rsvpStatus === CONST.YES) {
       setYesButtonColor("primary");
       setNoButtonColor("secondary");
       setMaybeButtonColor("secondary");
-    } else if (rsvpStatus === RSVP.NO) {
+    } else if (rsvpStatus === CONST.NO) {
       setYesButtonColor("secondary");
       setNoButtonColor("danger");
       setMaybeButtonColor("secondary");
-    } else if (rsvpStatus === RSVP.MAYBE) {
+    } else if (rsvpStatus === CONST.MAYBE) {
       setYesButtonColor("secondary");
       setNoButtonColor("secondary");
       setMaybeButtonColor("success");
@@ -65,17 +65,17 @@ function RsvpButton(props) {
 
   return (
     <>
-      <Button variant={yesButtonColor} value={RSVP.YES} onClick={rsvpHandler}>
+      <Button variant={yesButtonColor} value={CONST.YES} onClick={rsvpHandler}>
         {" "}
         Yes
       </Button>
-      <Button variant={noButtonColor} value={RSVP.NO} onClick={rsvpHandler}>
+      <Button variant={noButtonColor} value={CONST.NO} onClick={rsvpHandler}>
         {" "}
         No
       </Button>
       <Button
         variant={maybeButtonColor}
-        value={RSVP.MAYBE}
+        value={CONST.MAYBE}
         onClick={rsvpHandler}
       >
         {" "}

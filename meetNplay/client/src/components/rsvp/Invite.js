@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import * as CONST from "./RsvpText";
 
 function FriendList(props) {
   const playdateId = props.playdateId;
@@ -87,7 +88,11 @@ function FriendList(props) {
                     />
                   )}
                 </td>
-                <td>{rsvps[friend.id] !== null && <span>test</span>}</td>
+                <td>
+                  {rsvps[friend.id] !== null && (
+                    <span>{CONST.rsvpText(rsvps[friend.id])}</span>
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>

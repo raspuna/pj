@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import * as CONST from "./RsvpText";
 
 function Members(props) {
   const { playdateId } = props;
@@ -32,7 +33,7 @@ function Members(props) {
           {members.map((member) => (
             <tr key={member.id}>
               <td>{member.name}</td>
-              <td>{member.rsvp_status}</td>
+              <td>{CONST.rsvpText(member.rsvp_status)}</td>
             </tr>
           ))}
         </tbody>
