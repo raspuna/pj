@@ -15,6 +15,13 @@ const findInvited = (data) => {
   JOIN rsvps r ON p.id = r.playdate_id WHERE r.user_id=? `;
   return query(sql, data);
 };
+const findRsvps = (data) => {
+  console.log("find rsvps");
+  sql = `SELECT u.id, u.name, u.email, r.rsvp_status FROM users u 
+  JOIN rsvps r ON r.user_id = u.id 
+  JOIN playdates p ON p.id=r.playdate_id WHERE p.id = ?`;
+  return query(sql, data);
+};
 const findOne = (data) => {
   console.log("findOne playdate");
   sql = "SELECT * FROM playdates WHERE id =? ";
@@ -30,4 +37,12 @@ const remove = (id) => {
   sql = "DELETE FROM playdates WHERE id =?";
   return query(sql, id);
 };
-module.exports = { create, find, findInvited, findOne, update, remove };
+module.exports = {
+  create,
+  find,
+  findInvited,
+  findRsvps,
+  findOne,
+  update,
+  remove,
+};

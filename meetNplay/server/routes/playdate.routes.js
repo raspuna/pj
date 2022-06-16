@@ -9,6 +9,7 @@ module.exports = (app) => {
     authenticate,
     PlaydateController.getInvitedPlaydates
   );
+  app.get("/api/playdate/:id/rsvps", authenticate, PlaydateController.getRsvps);
   app.get("/api/playdate/:id", authenticate, PlaydateController.getPlaydate);
   app.put("/api/playdate/:id", authenticate, PlaydateController.updatePlaydate);
   app.delete(

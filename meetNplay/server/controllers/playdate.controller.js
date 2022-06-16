@@ -43,6 +43,17 @@ const getInvitedPlaydates = async (req, res) => {
     res.status(500).json({ err: "database err" });
   }
 };
+const getRsvps = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const results = await Playdate.findRsvps(id);
+    console.log(results);
+    res.status(200).json(results);
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ err: "database err" });
+  }
+};
 const getPlaydate = async (req, res) => {
   const id = req.params.id;
   try {
@@ -114,6 +125,7 @@ module.exports = {
   createPlaydate,
   getPlaydates,
   getInvitedPlaydates,
+  getRsvps,
   getPlaydate,
   updatePlaydate,
   deletePlaydate,
