@@ -45,9 +45,11 @@ const getInvitedPlaydates = async (req, res) => {
   }
 };
 const getRsvps = async (req, res) => {
+  const decodeJwt = jwt.decode(req.cookies.usertoken, { complete: true });
+  const myid = decodeJwt.payload.id;
   const id = req.params.id;
   try {
-    const results = await Playdate.findRsvps(id);
+    const results = await Playdate.findRsvps([id, myid]);
     console.log(results);
     res.status(200).json(results);
   } catch (e) {

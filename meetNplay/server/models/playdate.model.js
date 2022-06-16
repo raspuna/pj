@@ -19,7 +19,7 @@ const findRsvps = (data) => {
   console.log("find rsvps");
   sql = `SELECT u.id, u.name, u.email, r.rsvp_status FROM users u 
   JOIN rsvps r ON r.user_id = u.id 
-  JOIN playdates p ON p.id=r.playdate_id WHERE p.id = ?`;
+  JOIN playdates p ON p.id=r.playdate_id WHERE p.id = ? AND r.user_id != ?`;
   return query(sql, data);
 };
 const findOne = (data) => {
