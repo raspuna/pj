@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const Friend = require("../models/friend.model");
+const RSVP = require("../models/rsvp.model");
 
 const createFriend = async (req, res) => {
   console.log("create friends");
@@ -42,7 +43,9 @@ const deleteFriend = async (req, res) => {
   console.log("delete friend");
   const decodeJwt = jwt.decode(req.cookies.usertoken, { complete: true });
   try {
-    const result = await Friend.remove(req.params.id, decodeJwt.payload.id);
+    const friendId = req.params.id;
+    await RSVP.remove({ user_id: friendId });
+    const result = await Friend.remove(friendId, decodeJwt.payload.id);
     console.log(result);
     res.status(200).json(result[0]);
   } catch (e) {

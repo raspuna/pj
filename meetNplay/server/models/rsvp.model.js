@@ -20,9 +20,9 @@ const update = (data) => {
   sql = "UPDATE rsvps SET rsvp_status=? WHERE playdate_id = ? AND user_id =?";
   return query(sql, data);
 };
-const remove = (id) => {
+const remove = (data) => {
   console.log("remove");
-  sql = "DELETE FROM rsvps WHERE id=?";
-  return query(sql, id);
+  sql = "DELETE FROM rsvps WHERE ?";
+  return query(sql, data);
 };
 module.exports = { create, creates, update, remove, findOne };
