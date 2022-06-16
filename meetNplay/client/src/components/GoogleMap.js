@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Form from "react-bootstrap/Form";
 import { Loader } from "@googlemaps/js-api-loader";
 
-//let center = new google.maps.LatLng(34.052235, -118.243683);
+//google API loader
 const loader = new Loader({
   apiKey: process.env.REACT_APP_MAP_KEY,
   version: "weekly",

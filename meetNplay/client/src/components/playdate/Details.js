@@ -33,7 +33,6 @@ function Details() {
   return (
     <div>
       <Header />
-      Details
       <h2>{playdate && playdate.title} </h2>
       {playdate && (
         <GoogleMap
@@ -58,7 +57,12 @@ function Details() {
         {playdate &&
           (playdate.isHost ? (
             <>
-              <Link to={`/playdate/edit/${playdate.id}`}>Edit</Link> |
+              <Link
+                className="btn btn-warning"
+                to={`/playdate/edit/${playdate.id}`}
+              >
+                Edit
+              </Link>{" "}
               <DeleteButton
                 playdateId={playdate.id}
                 callbackFunction={() => navigate(`/playdates`)}
