@@ -21,14 +21,14 @@ function PlaydateList(props) {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [isHost]);
   return (
     <div>
       <p>upcoming({playdates.length})</p>
       {playdates.map((p) => (
         <p key={p.id}>
           <Link to={`/playdate/${p.id}`}> {p.title}</Link>
-          by {p.host_id}
+          {!isHost && <span>by {p.host_id}</span>}
           {new Date(p.start_time).toLocaleDateString()}
           {new Date(p.start_time).toLocaleTimeString()} ~
           {new Date(p.end_time).toLocaleTimeString()}

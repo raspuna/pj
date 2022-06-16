@@ -12,6 +12,7 @@ function Details() {
   const { playdateId } = useParams();
   const [playdate, setPlaydate] = useState(null);
   const [place, setPlace] = useState("");
+
   useEffect(() => {
     axios
       .get(
@@ -63,8 +64,8 @@ function Details() {
           </>
         )}
       </p>
-      {playdate && <Invite playdateId={playdate.id} />}
-      {playdate && <Members playdateId={playdate.id} />}
+      {playdate && playdate.isHost && <Invite playdateId={playdate.id} />}
+      {playdate && !playdate.isHost && <Members playdateId={playdate.id} />}
     </div>
   );
 }
