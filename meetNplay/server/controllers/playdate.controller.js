@@ -55,11 +55,19 @@ const getRsvps = async (req, res) => {
   }
 };
 const getPlaydate = async (req, res) => {
+  const decodeJwt = jwt.decode(req.cookies.usertoken, { complete: true });
+  const myid = decodeJwt.payload.id;
+
   const id = req.params.id;
   try {
     const result = await Playdate.findOne(id);
-    console.log(result);
-    res.status(200).json(result[0]);
+    const retData =
+      result[0].host_id == myid
+        ? { ...result[0], isHost: true }
+        : { ...result[0], isHost: false };
+
+    console.log(retData);
+    res.status(200).json(retData);
   } catch (e) {
     console.log(e);
     res.status(500).json({ err: "database err" });
