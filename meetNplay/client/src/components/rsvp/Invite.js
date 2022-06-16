@@ -75,6 +75,11 @@ function FriendList(props) {
             </tr>
           </thead>
           <tbody>
+            {/*
+              friends list
+              if a friend is not invited, then drow checkbox
+              else show their rsvp status
+            */}
             {friends.map((friend) => (
               <tr key={friend.id}>
                 <td>{friend.name}</td>
