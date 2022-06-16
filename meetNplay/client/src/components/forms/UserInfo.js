@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 function UserInfo(props) {
-  const [errors, setErrors] = useState({});
+  const [error, setError] = useState("");
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -15,11 +15,15 @@ function UserInfo(props) {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    props.submitHandler(user);
-    console.log({ user });
+    if (user.password !== confirmed) {
+      setError("Password does not match");
+    } else {
+      props.submitHandler(user);
+    }
   };
 
   const changeHandler = (e) => {
+    setError("");
     if (e.target.name === "confirmed") {
       setConfirmed(e.target.value);
     } else {
@@ -66,6 +70,7 @@ function UserInfo(props) {
             name="confirmed"
             onChange={changeHandler}
           />
+          {error && <Form.Text className="text-danger">{error} </Form.Text>}
         </FormGroup>
         <FormGroup>
           <Form.Label>Phone:</Form.Label>
