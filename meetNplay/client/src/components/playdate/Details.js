@@ -53,25 +53,23 @@ function Details() {
       <p>
         End time :{playdate && new Date(playdate.end_time).toLocaleTimeString()}
       </p>
-      <p>
-        {playdate &&
-          (playdate.isHost ? (
-            <div className="d-flex justify-content-center">
-              <Link
-                className="btn btn-warning"
-                to={`/playdate/edit/${playdate.id}`}
-              >
-                Edit
-              </Link>{" "}
-              <DeleteButton
-                playdateId={playdate.id}
-                callbackFunction={() => navigate(`/playdates`)}
-              ></DeleteButton>
-            </div>
-          ) : (
-            <RsvpButton playdateId={playdate.id} />
-          ))}
-      </p>
+      {playdate &&
+        (playdate.isHost ? (
+          <div className="d-flex justify-content-center">
+            <Link
+              className="btn btn-warning"
+              to={`/playdate/edit/${playdate.id}`}
+            >
+              Edit
+            </Link>{" "}
+            <DeleteButton
+              playdateId={playdate.id}
+              callbackFunction={() => navigate(`/playdates`)}
+            ></DeleteButton>
+          </div>
+        ) : (
+          <RsvpButton playdateId={playdate.id} />
+        ))}
       {playdate && playdate.isHost && <Invite playdateId={playdate.id} />}
       {playdate && !playdate.isHost && (
         <Members hostName={playdate.name} playdateId={playdate.id} />
