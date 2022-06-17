@@ -18,13 +18,11 @@ function LogIn() {
       .post(
         `${process.env.REACT_APP_SERVER_ADDRESS}/api/user/login`,
         loginInfo,
-        {
-          withCredentials: true,
-        }
+        { withCredentials: true }
       )
       .then((res) => {
         console.log(res);
-        console.log("success");
+        console.log("login success");
         navigate("/home");
       })
       .catch((err) => {
