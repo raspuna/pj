@@ -17,7 +17,11 @@ function Delete(props) {
         console.log("delete err", err);
       });
   };
-  return <Button onClick={deleteHandler}>Delete</Button>;
+  return (
+    <Button variant={"danger"} onClick={deleteHandler}>
+      Delete
+    </Button>
+  );
 }
 
 export default Delete;

@@ -7,13 +7,13 @@ function RsvpButton(props) {
   const { playdateId } = props;
   console.log(playdateId, typeof playdateId);
   const [rsvp, setRsvp] = useState(CONST.NOT_YET);
-  const [yesButtonColor, setYesButtonColor] = useState("primary");
+  const [yesButtonColor, setYesButtonColor] = useState("success");
   const [noButtonColor, setNoButtonColor] = useState("danger");
-  const [maybeButtonColor, setMaybeButtonColor] = useState("success");
+  const [maybeButtonColor, setMaybeButtonColor] = useState("warning");
   const setButtonColor = (rsvpStatus) => {
     console.log(rsvpStatus, typeof rsvpStatus);
     if (rsvpStatus === CONST.YES) {
-      setYesButtonColor("primary");
+      setYesButtonColor("success");
       setNoButtonColor("secondary");
       setMaybeButtonColor("secondary");
     } else if (rsvpStatus === CONST.NO) {
@@ -23,7 +23,7 @@ function RsvpButton(props) {
     } else if (rsvpStatus === CONST.MAYBE) {
       setYesButtonColor("secondary");
       setNoButtonColor("secondary");
-      setMaybeButtonColor("success");
+      setMaybeButtonColor("warning");
     }
   };
   useEffect(() => {
