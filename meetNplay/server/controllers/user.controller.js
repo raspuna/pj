@@ -3,11 +3,18 @@ const bcrypt = require("bcrypt");
 const User = require("../models/user.model");
 
 const register = async (req, res) => {
-  const encryptedPassword = await bcrypt.hash(req.body.password, 10);
+  const [isValid, err] = User.validateUser(req.body.user, req.body.confirmed);
+  if (!isValid) {
+    console.log("what happend?", err);
+    res.status(400).json({ err: err });
+    return;
+  }
+  const encryptedPassword = await bcrypt.hash(req.body.user.password, 10);
   const user = {
-    ...req.body,
+    ...req.body.user,
     password: encryptedPassword,
   };
+
   try {
     const result = await User.create(user);
     const userToken = jwt.sign(

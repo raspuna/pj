@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 function UserInfo(props) {
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState({});
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -15,15 +15,10 @@ function UserInfo(props) {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if (user.password !== confirmed) {
-      setError("Password does not match");
-    } else {
-      props.submitHandler(user);
-    }
+    props.submitHandler({ user: user, confirmed: confirmed }, setErrors);
   };
 
   const changeHandler = (e) => {
-    setError("");
     if (e.target.name === "confirmed") {
       setConfirmed(e.target.value);
     } else {
@@ -36,41 +31,60 @@ function UserInfo(props) {
       <Form onSubmit={submitHandler}>
         <h1>Sign up</h1>
         <FormGroup>
-          <Form.Label>Name:</Form.Label>
+          <Form.Label>
+            Name<span className="text-danger">*</span>:
+          </Form.Label>
           <Form.Control
             type="text"
             value={user.name}
             name="name"
             onChange={changeHandler}
           />
+          {errors.name && (
+            <Form.Text className="text-danger">{errors.msg}</Form.Text>
+          )}
         </FormGroup>
         <FormGroup>
-          <Form.Label>Email:</Form.Label>
+          <Form.Label>
+            Email<span className="text-danger">*</span>:
+          </Form.Label>
           <Form.Control
             type="text"
             value={user.email}
             name="email"
             onChange={changeHandler}
           />
+          {errors.email && (
+            <Form.Text className="text-danger">{errors.msg}</Form.Text>
+          )}
         </FormGroup>
         <FormGroup>
-          <Form.Label>Password:</Form.Label>
+          <Form.Label>
+            Password<span className="text-danger">*</span>:
+          </Form.Label>
           <Form.Control
             type="password"
             value={user.password}
             name="password"
             onChange={changeHandler}
           />
+          {errors.password && (
+            <Form.Text className="text-danger">{errors.msg}</Form.Text>
+          )}
         </FormGroup>
         <FormGroup>
-          <Form.Label>Confirm Password:</Form.Label>
+          <Form.Label>
+            Confirm Password<span className="text-danger">*</span>:
+          </Form.Label>
           <Form.Control
             type="password"
             value={user.confirmed}
             name="confirmed"
             onChange={changeHandler}
           />
-          {error && <Form.Text className="text-danger">{error} </Form.Text>}
+          {errors.confirmed && (
+            <Form.Text className="text-danger">{errors.msg}</Form.Text>
+          )}
         </FormGroup>
         <FormGroup>
           <Form.Label>Phone:</Form.Label>

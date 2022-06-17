@@ -1,18 +1,33 @@
 const { query } = require("../config/mysql");
-const validateUser = (userData, errArray) => {
+const validateUser = (userData, confirmed) => {
   if (!userData.name) {
-    errArray.push("user name is missing");
-    return false;
+    return [false, { name: "name", msg: "User name is missing" }];
   }
   if (userData.name.length < 3) {
-    errArray.push("user name is too short");
-    return false;
+    return [false, { name: "name", msg: "User name is too short" }];
+  }
+  if (!userData.email) {
+    return [false, { email: "email", msg: "Email is missing" }];
   }
   if (!/^([\w-\.]+@([\w-]+\.)+[\w-]+)?$/.test(userData.email)) {
-    errArray.push("invalid email pattern");
-    return false;
+    return [false, { email: "email", msg: "Invalid email" }];
   }
-  return true;
+  if (!userData.password) {
+    return [false, { password: "password", msg: "Password is missing" }];
+  }
+  if (userData.password.length < 3) {
+    return [false, { password: "password", msg: "Password is too short" }];
+  }
+  if (!confirmed) {
+    return [
+      false,
+      { confirmed: "confirmed", msg: "Confirm Password is missing" },
+    ];
+  }
+  if (userData.password !== confirmed) {
+    return [false, { confirmed: "confirmed", msg: "Password doesn't match" }];
+  }
+  return [true, 0, ""];
 };
 
 const create = async (data) => {
@@ -43,6 +58,7 @@ const remove = async (id) => {
   return await query(sql, id);
 };
 module.exports = {
+  validateUser,
   create,
   find,
   findOne,
