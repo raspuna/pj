@@ -15,7 +15,7 @@ function PlaydateList(props) {
         withCredentials: true,
       })
       .then((res) => {
-        console.log("what?", res.data);
+        console.log("playdates", res.data);
         setPlaydates(res.data);
       })
       .catch((err) => {
@@ -26,7 +26,7 @@ function PlaydateList(props) {
     <div>
       <p>upcoming({playdates.length})</p>
       {playdates.map((p) => (
-        <p key={p.id}>
+        <div key={p.id}>
           <Link to={`/playdate/${p.id}`}> {p.title}</Link>
           {!isHost && (
             <span>
@@ -38,7 +38,7 @@ function PlaydateList(props) {
             {new Date(p.start_time).toLocaleTimeString()} ~
             {new Date(p.end_time).toLocaleTimeString()}
           </div>
-        </p>
+        </div>
       ))}
     </div>
   );
