@@ -73,7 +73,9 @@ function Details() {
           ))}
       </p>
       {playdate && playdate.isHost && <Invite playdateId={playdate.id} />}
-      {playdate && !playdate.isHost && <Members playdateId={playdate.id} />}
+      {playdate && !playdate.isHost && (
+        <Members hostName={playdate.name} playdateId={playdate.id} />
+      )}
     </div>
   );
 }

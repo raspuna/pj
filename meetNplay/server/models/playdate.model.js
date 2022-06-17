@@ -24,7 +24,8 @@ const findRsvps = (data) => {
 };
 const findOne = (data) => {
   console.log("findOne playdate");
-  sql = "SELECT * FROM playdates WHERE id =? ";
+  sql =
+    "SELECT p.*, u.name FROM playdates p JOIN users u ON u.id = p.host_id WHERE p.id  =? ";
   return query(sql, data);
 };
 const update = (data, id) => {

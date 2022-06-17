@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import * as CONST from "./RsvpText";
 
 function Members(props) {
-  const { playdateId } = props;
+  const { playdateId, hostName } = props;
   const [members, setMembers] = useState([]);
   useEffect(() => {
     axios
@@ -22,7 +22,7 @@ function Members(props) {
   }, []);
   return (
     <div>
-      <table>
+      <table className="table table-striped">
         <thead>
           <tr>
             <th>Name</th>
@@ -30,6 +30,10 @@ function Members(props) {
           </tr>
         </thead>
         <tbody>
+          <tr>
+            <td>{hostName}</td>
+            <td>-- HOST -- </td>
+          </tr>
           {members.map((member) => (
             <tr key={member.id}>
               <td>{member.name}</td>
