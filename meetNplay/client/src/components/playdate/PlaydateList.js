@@ -30,12 +30,14 @@ function PlaydateList(props) {
           <Link to={`/playdate/${p.id}`}> {p.title}</Link>
           {!isHost && (
             <span>
-              ({CONST.rsvpText(p.rsvp_status)}) by {p.host_id}
+              ({CONST.rsvpText(p.rsvp_status)}) by {p.name}
             </span>
           )}
-          {new Date(p.start_time).toLocaleDateString()}
-          {new Date(p.start_time).toLocaleTimeString()} ~
-          {new Date(p.end_time).toLocaleTimeString()}
+          <div>
+            {new Date(p.start_time).toLocaleDateString()}{" "}
+            {new Date(p.start_time).toLocaleTimeString()} ~
+            {new Date(p.end_time).toLocaleTimeString()}
+          </div>
         </p>
       ))}
     </div>
