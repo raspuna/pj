@@ -27,6 +27,7 @@ function AddFriend() {
       )
       .then((res) => {
         console.log(res);
+        setEmail("");
         setFriend(null);
       })
       .catch((err) => {
