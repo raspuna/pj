@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Table from "react-bootstrap/Table";
 import Header from "../Header";
 import DeleteFriend from "./Delete";
 
@@ -19,8 +20,14 @@ function FriendList() {
   return (
     <div>
       <Header />
-      <Link to="/newFriend">Add a Friend</Link>
-      <table className="table table-striped">
+      <div className="d-flex justify-content-between align-items-baseline">
+        <h2>My Friends</h2>
+        <Link className="text-info" to="/newFriend">
+          Add a Friend
+        </Link>
+      </div>
+
+      <Table striped>
         <thead>
           <tr>
             <th>Name</th>
@@ -43,7 +50,7 @@ function FriendList() {
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
     </div>
   );
 }

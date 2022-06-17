@@ -1,9 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import "bootswatch/dist/sketchy/bootstrap.min.css";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import "bootstrap/dist/css/bootstrap.min.css";
+
+//import "bootstrap/dist/css/bootstrap.min.css";
+import "./fonts/Mystery_Quest/MysteryQuest-Regular.ttf";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<App />);

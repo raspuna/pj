@@ -41,22 +41,22 @@ function Details() {
           showSearchBar={false}
         />
       )}
-      <p> place : {playdate && playdate.place}</p>
+      <p> Place : {playdate && playdate.place}</p>
       <p>
         {" "}
-        Date: {playdate && new Date(playdate.start_time).toLocaleDateString()}
+        Date : {playdate && new Date(playdate.start_time).toLocaleDateString()}
       </p>
       <p>
-        start time:
+        Start time :
         {playdate && new Date(playdate.start_time).toLocaleTimeString()}
       </p>
       <p>
-        end time:{playdate && new Date(playdate.end_time).toLocaleTimeString()}
+        End time :{playdate && new Date(playdate.end_time).toLocaleTimeString()}
       </p>
       <p>
         {playdate &&
           (playdate.isHost ? (
-            <>
+            <div className="d-flex justify-content-center">
               <Link
                 className="btn btn-warning"
                 to={`/playdate/edit/${playdate.id}`}
@@ -67,7 +67,7 @@ function Details() {
                 playdateId={playdate.id}
                 callbackFunction={() => navigate(`/playdates`)}
               ></DeleteButton>
-            </>
+            </div>
           ) : (
             <RsvpButton playdateId={playdate.id} />
           ))}

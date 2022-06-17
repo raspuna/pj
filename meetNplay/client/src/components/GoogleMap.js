@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import Form from "react-bootstrap/Form";
+import { Form, Button } from "react-bootstrap";
 import { Loader } from "@googlemaps/js-api-loader";
 
 //google API loader
@@ -89,7 +89,9 @@ function GoogleMap(props) {
                 name="query"
                 onChange={changeHandler}
               />
-              <button onClick={reDraw}>search</button>
+              <Button variant="success" onClick={reDraw}>
+                search
+              </Button>
             </>
           )}
         </div>

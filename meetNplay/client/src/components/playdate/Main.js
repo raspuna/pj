@@ -8,10 +8,15 @@ function Main() {
   return (
     <>
       <Header />
-      <Link to="/newPlaydate">New Playdate</Link>
-      <h3>My playdates</h3>
+
+      <div className="d-flex justify-content-between align-items-baseline">
+        <h2>My playdates</h2>{" "}
+        <Link className="text-info" to="/newPlaydate">
+          New Playdate
+        </Link>
+      </div>
       <PlaydateList type={HOST} />
-      <h3>Invited</h3>
+      <h2>Invited</h2>
       <PlaydateList type={INVITED} />
     </>
   );

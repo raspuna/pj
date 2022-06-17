@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
-import FormGroup from "react-bootstrap/esm/FormGroup";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import { Form, FormGroup, Button } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import GMap from "../GoogleMap";
 
@@ -91,43 +89,48 @@ function PlaydateInfo(props) {
             onChange={(date) => setDateHandler(date)}
           />
         </FormGroup>
-
-        <FormGroup>
-          <Form.Label>Start Time:</Form.Label>
-          <DatePicker
-            selected={startTime}
-            onChange={(time) => {
-              if (time) {
-                setStartTime(time);
-              }
-            }}
-            showTimeSelect
-            showTimeSelectOnly
-            timeIntervals={30}
-            timeCaption="Time"
-            dateFormat="h:mm aa"
-          />
-        </FormGroup>
-        <FormGroup>
-          <Form.Label>End Time:</Form.Label>
-          <DatePicker
-            selected={endTime}
-            onChange={(time) => {
-              if (time) {
-                setEndTime(time);
-              }
-            }}
-            showTimeSelect
-            showTimeSelectOnly
-            timeIntervals={30}
-            timeCaption="Time"
-            dateFormat="h:mm aa"
-          />
-          {errors.time && (
-            <Form.Text className="text-danger">{errors.msg}</Form.Text>
-          )}
-        </FormGroup>
-        <Button type="submit">{buttonText}</Button>
+        <div className="d-flex">
+          <FormGroup>
+            <Form.Label>Start Time:</Form.Label>
+            <DatePicker
+              selected={startTime}
+              onChange={(time) => {
+                if (time) {
+                  setStartTime(time);
+                }
+              }}
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={30}
+              timeCaption="Time"
+              dateFormat="h:mm aa"
+            />
+          </FormGroup>
+          <FormGroup>
+            <Form.Label>End Time:</Form.Label>
+            <DatePicker
+              selected={endTime}
+              onChange={(time) => {
+                if (time) {
+                  setEndTime(time);
+                }
+              }}
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={30}
+              timeCaption="Time"
+              dateFormat="h:mm aa"
+            />
+          </FormGroup>
+        </div>{" "}
+        {errors.time && (
+          <Form.Text className="text-danger">{errors.msg}</Form.Text>
+        )}
+        <div className="d-flex justify-content-center">
+          <Button variant="success" type="submit" className="mt-4">
+            {buttonText}
+          </Button>
+        </div>
       </Form>
     </div>
   );

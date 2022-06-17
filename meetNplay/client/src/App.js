@@ -1,5 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Container from "react-bootstrap/Container";
 import Index from "./components/Index";
 import NewUser from "./components/NewUser";
 import Home from "./components/Home";
@@ -13,7 +14,7 @@ import PlaydateDetail from "./components/playdate/Details";
 
 function App() {
   return (
-    <div className="container">
+    <Container>
       <BrowserRouter>
         <Routes>
           <Route exact path="/" element={<Index />} />
@@ -31,7 +32,7 @@ function App() {
           <Route path="/newPlaydate" element={<NewPlaydate />} />
         </Routes>
       </BrowserRouter>
-    </div>
+    </Container>
   );
 }
 

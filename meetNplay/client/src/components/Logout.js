@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { Button } from "react-bootstrap";
 
 function Logout() {
   const navigate = useNavigate();
@@ -36,10 +37,15 @@ function Logout() {
   };
   return (
     <div>
-      <Link to="#">Hello! {user && user.name}</Link>|
-      <Link to="#" onClick={logoutHandler}>
+      Hello! {user && user.name}
+      <Button
+        variant="transparent"
+        className="ms-2"
+        size="sm"
+        onClick={logoutHandler}
+      >
         Logout
-      </Link>
+      </Button>
     </div>
   );
 }

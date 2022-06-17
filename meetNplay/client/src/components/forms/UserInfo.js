@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import FormGroup from "react-bootstrap/esm/FormGroup";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import { Form, FormGroup, Button } from "react-bootstrap";
 
 function UserInfo(props) {
   const [errors, setErrors] = useState({});

@@ -64,7 +64,7 @@ function RsvpButton(props) {
   };
 
   return (
-    <>
+    <div className="d-flex justify-content-center">
       <Button variant={yesButtonColor} value={CONST.YES} onClick={rsvpHandler}>
         {" "}
         Yes
@@ -81,7 +81,7 @@ function RsvpButton(props) {
         {" "}
         Maybe
       </Button>
-    </>
+    </div>
   );
 }
 

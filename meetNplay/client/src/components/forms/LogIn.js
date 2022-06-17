@@ -59,7 +59,11 @@ function LogIn() {
           />
         </FormGroup>
         {error && <Form.Text className="text-danger">{error}</Form.Text>}
-        <Button type="submit">LogIn</Button>
+        <div className="d-flex justify-content-center">
+          <Button variant="info" className="mt-2" type="submit">
+            LogIn
+          </Button>
+        </div>
       </Form>
     </div>
   );

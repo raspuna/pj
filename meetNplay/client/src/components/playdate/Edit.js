@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import PlaydateInfo from "../forms/PlaydateInfo";
 import Header from "../Header";
 
@@ -57,7 +57,12 @@ function Edit() {
   return (
     <div>
       <Header />
-      <h2>Edit Playdate</h2>
+      <div className="d-flex justify-content-between align-items-baseline">
+        <h2>Edit {playdate && playdate.title} </h2>
+        <Link className="text-info" to="/playdates">
+          Back to list
+        </Link>
+      </div>
       {place && (
         <PlaydateInfo
           place={place}

@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../Header";
-import Form from "react-bootstrap/Form";
-import FormGroup from "react-bootstrap/esm/FormGroup";
-import Button from "react-bootstrap/Button";
+import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
 
 function AddFriend() {
@@ -67,33 +65,54 @@ function AddFriend() {
   return (
     <div>
       <Header />
-      <Link to="/friends">friends</Link>
-      <div>
-        <Form onSubmit={submitHandler}>
-          <div className="d-flex">
-            <FormGroup className="d-flex">
-              <Form.Label>Email: </Form.Label>
-              <Form.Control
-                type="text"
-                value={email}
-                name="email"
-                onChange={changeHandler}
-              />
-            </FormGroup>
-            <Button type="submit">Search</Button>
-          </div>
-          {error && email && (
-            <Form.Text className="text-danger">{error}</Form.Text>
-          )}
-        </Form>
+      <div className="d-flex justify-content-between align-items-baseline">
+        <h2>Search User</h2>
+        <Link className="text-info" to="/friends">
+          Back to friend list
+        </Link>
+      </div>
+      <div className="d-flex justify-content-center">
+        <Card>
+          <Form onSubmit={submitHandler} className="d-flex flex-column">
+            <Card.Body>
+              <Card.Text>
+                <Form.Control
+                  type="text"
+                  value={email}
+                  name="email"
+                  placeholder="Enter an email"
+                  onChange={changeHandler}
+                />
+                {error && email && (
+                  <Form.Text className="text-danger">{error}</Form.Text>
+                )}
+              </Card.Text>
+              <Button variant="info" type="submit">
+                Search
+              </Button>
+            </Card.Body>
+          </Form>
+        </Card>
       </div>
       <div>
         {friend && (
-          <Form onSubmit={addFriendHandler}>
-            <Form.Label>{friend.name}</Form.Label>
-            <Form.Control type="hidden" value={friend.id} name="friend_id" />
-            <Button type="submit">Add</Button>
-          </Form>
+          <>
+            <h3>Add the user to your frined</h3>
+            <Form
+              onSubmit={addFriendHandler}
+              className="d-flex justify-content-center align-items-baseline"
+            >
+              <Form.Label className="m-3">{friend.name}</Form.Label>
+              <Form.Control
+                type="hidden"
+                value={friend.id}
+                name="friend_id"
+              />{" "}
+              <Button variant="success" type="submit">
+                Add
+              </Button>
+            </Form>
+          </>
         )}
       </div>
     </div>

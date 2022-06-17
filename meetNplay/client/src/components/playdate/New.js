@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PlaydateInfo from "../forms/PlaydateInfo";
 import Header from "../Header";
 
@@ -37,7 +37,12 @@ function New() {
   return (
     <div>
       <Header />
-      <h2>New Playdate</h2>
+      <div className="d-flex justify-content-between align-items-baseline">
+        <h2>New playdates</h2>{" "}
+        <Link className="text-info" to="/playdates">
+          Back to list
+        </Link>
+      </div>
       <PlaydateInfo
         place={place}
         setPlace={setPlace}

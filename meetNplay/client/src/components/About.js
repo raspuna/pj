@@ -1,12 +1,55 @@
 import React from "react";
 import Header from "./Header";
-
+import { Row, Col, Tabs, Tab } from "react-bootstrap";
+import "./Header.css";
+const titleFont = {
+  fontFamily: "Mystery_Quest",
+  marginRight: "5px",
+  color: "#FD5E53",
+};
 function About() {
   return (
     <div>
       <Header />
-      <p>MeetNPlay is a playdate scheduler.</p>
-      <p>Make a new playdate and invite your friends!</p>
+      <div className="d-flex align-items-baseline">
+        <h3>
+          {" "}
+          About<span style={titleFont}> MeetNPlay</span>
+        </h3>
+        <p className="text-muted"> by Kyeongeun Choi </p>
+      </div>
+      <p>Description</p>
+      <ul>
+        {" "}
+        <span style={titleFont}> MeetNPlay</span>is a playdate scheduler.
+      </ul>
+      <ul> Add friends, and invite them to my playdate easily!</ul>
+      <p>
+        {" "}
+        Why <span style={titleFont}> MeetNPlay</span>?
+      </p>
+      <ul>
+        <li>Add place address easily</li>
+        <li>Invite easily</li>
+        <li>Check RSVP easily</li>
+        <li> </li>
+      </ul>
+      <p>Stack</p>
+      <ul>MySQL - express, react, node</ul>
+      <p>Challege</p>
+      <ol>
+        <li>How can I connect MySql to Node?</li>
+        <li>How can I add a map my app?</li>
+        <li>How can I add authenticate in my app?</li>
+        <li>How can I apply bootstrap theme?</li>
+      </ol>
+      <p>What I've learn</p>
+      <ul>
+        <li>mysql-node api</li>
+        <li>Google Map api</li>
+        <li>jsonwebtoken authentication</li>
+        <li>react-bootstrap theme</li>
+      </ul>
     </div>
   );
 }

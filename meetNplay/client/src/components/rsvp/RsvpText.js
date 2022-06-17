@@ -18,3 +18,25 @@ export function rsvpText(rsvp) {
     return <span className={"text-" + NOT_YET_COLOR}>NOT YET</span>;
   }
 }
+export function rsvpTextOnly(rsvp) {
+  if (rsvp === YES) {
+    return "Attend";
+  } else if (rsvp === NO) {
+    return "Not Attend";
+  } else if (rsvp === MAYBE) {
+    return "Maybe Attend";
+  } else {
+    return "Not yet answerd";
+  }
+}
+export function rsvpColor(rsvp) {
+  if (rsvp === YES) {
+    return YES_COLOR;
+  } else if (rsvp === NO) {
+    return NO_COLOR;
+  } else if (rsvp === MAYBE) {
+    return MAYBE_COLOR;
+  } else {
+    return NOT_YET_COLOR;
+  }
+}

@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import { Form, Button } from "react-bootstrap";
 import * as CONST from "./RsvpText";
 
 function FriendList(props) {
@@ -106,7 +105,11 @@ function FriendList(props) {
             ))}
           </tbody>
         </table>
-        <Button type="submit">Invite!</Button>
+        <div className="d-flex justify-content-center">
+          <Button variant="info" type="submit">
+            Invite
+          </Button>
+        </div>
       </Form>
     </div>
   );
