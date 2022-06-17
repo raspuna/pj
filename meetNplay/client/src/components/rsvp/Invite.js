@@ -8,6 +8,7 @@ function FriendList(props) {
   const [friends, setFriends] = useState([]);
   const [invitations, setInvitations] = useState({});
   const [rsvps, setRsvps] = useState({});
+  const [buttonColor, setButtonColor] = useState("secondary");
 
   useEffect(() => {
     axios
@@ -22,7 +23,7 @@ function FriendList(props) {
         setFriends(res.data);
         for (var i = 0; i < res.data.length; i++) {
           rsvps[res.data[i].id] = res.data[i].rsvp_status;
-          console.log(rsvps);
+          //  console.log(rsvps);
         }
         setRsvps(rsvps);
         console.log(rsvps);
@@ -32,8 +33,20 @@ function FriendList(props) {
     if (e.target.id in invitations) {
       delete invitations[e.target.id];
     } else {
-      setInvitations({ ...invitations, [e.target.id]: true });
+      invitations[e.target.id] = true;
     }
+    // Change Invite button color by number of checkbox.
+    // If nothing is checked, the botton color will turn to "secondary"
+    const invLen = Object.keys(invitations).length;
+    console.log(invLen, invitations);
+    if (invLen > 0) {
+      setButtonColor("info");
+    } else {
+      setButtonColor("secondary");
+    }
+    //save the invitations
+    //If this line goes up, then invLen will be wrong value
+    setInvitations(invitations);
   };
   const submitHandler = (e) => {
     e.preventDefault();
@@ -106,7 +119,7 @@ function FriendList(props) {
           </tbody>
         </table>
         <div className="d-flex justify-content-center">
-          <Button variant="info" type="submit">
+          <Button variant={buttonColor} type="submit">
             Invite
           </Button>
         </div>
