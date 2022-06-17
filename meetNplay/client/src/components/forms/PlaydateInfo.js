@@ -6,6 +6,15 @@ import Button from "react-bootstrap/Button";
 import "react-datepicker/dist/react-datepicker.css";
 import GMap from "../GoogleMap";
 
+function updateTime(stime, etime, dateDay) {
+  stime.setFullYear(dateDay.y);
+  stime.setMonth(dateDay.m);
+  stime.setDate(dateDay.d);
+  etime.setFullYear(dateDay.y);
+  etime.setMonth(dateDay.m);
+  etime.setDate(dateDay.d);
+}
+
 function PlaydateInfo(props) {
   const {
     playdate,
@@ -32,16 +41,9 @@ function PlaydateInfo(props) {
       console.log("Something wrong, missing playdate");
       return;
     }
-    startTime.setFullYear(dateDay.y);
-    startTime.setMonth(dateDay.m);
-    startTime.setDate(dateDay.d);
+    updateTime(startTime, endTime, dateDay);
     setStartTime(startTime);
-    endTime.setFullYear(dateDay.y);
-    endTime.setMonth(dateDay.m);
-    endTime.setDate(dateDay.d);
     setEndTime(endTime);
-    console.log({ startTime });
-    console.log({ endTime });
     playdate.startTime = startTime;
     playdate.endTime = endTime;
     playdate.place = place;
@@ -50,19 +52,14 @@ function PlaydateInfo(props) {
     props.submitHandler(playdate, setErrors);
   };
   const changeHandler = (e) => {
-    console.log(e);
     setPlaydate({ ...playdate, [e.target.name]: e.target.value });
-    console.log(startTime);
   };
-  const setDateHandler = (d) => {
-    if (!d) {
+  const setDateHandler = (day) => {
+    if (!day) {
       return;
     }
-    setStartDate(d);
-    const year = d.getFullYear();
-    const month = d.getMonth();
-    const day = d.getDate();
-    setDateDay({ y: year, m: month, d: day });
+    setStartDate(day);
+    setDateDay({ y: day.getFullYear(), m: day.getMonth(), d: day.getDate() });
   };
   return (
     <div>
@@ -126,6 +123,9 @@ function PlaydateInfo(props) {
             timeCaption="Time"
             dateFormat="h:mm aa"
           />
+          {errors.time && (
+            <Form.Text className="text-danger">{errors.msg}</Form.Text>
+          )}
         </FormGroup>
         <Button type="submit">{buttonText}</Button>
       </Form>

@@ -9,6 +9,12 @@ const validatePlaydate = (playdate) => {
       { place: "place", msg: "Place is missing(please use search box!)" },
     ];
   }
+  if (playdate.startTime >= playdate.endTime) {
+    return [
+      false,
+      { time: "time", msg: "end time is earlier than start time" },
+    ];
+  }
   return [true, null];
 };
 const create = async (data) => {
