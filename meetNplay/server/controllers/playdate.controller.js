@@ -2,6 +2,12 @@ const jwt = require("jsonwebtoken");
 const Playdate = require("../models/playdate.model");
 const RSVP = require("../models/rsvp.model");
 const createPlaydate = async (req, res) => {
+  const [isValid, err] = Playdate.validatePlaydate(req.body);
+  if (!isValid) {
+    console.log("validation fail!", err);
+    res.status(400).json({ err: err });
+    return;
+  }
   const decodeJwt = jwt.decode(req.cookies.usertoken, { complete: true });
   const start = new Date(req.body.startTime);
   const end = new Date(req.body.endTime);
@@ -99,7 +105,12 @@ const updatePlaydate = async (req, res) => {
   if (!(await authorizePlaydate(req.params.id, req, res))) {
     return;
   }
-
+  const [isValid, err] = Playdate.validatePlaydate(req.body);
+  if (!isValid) {
+    console.log("validation fail!", err);
+    res.status(400).json({ err: err });
+    return;
+  }
   const start = new Date(Date.parse(req.body.startTime));
   const end = new Date(Date.parse(req.body.endTime));
   const data = {

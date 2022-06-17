@@ -18,7 +18,7 @@ function New() {
   let e = new Date();
   e.setHours(e.getHours() + 2);
   const [endTime, setEndTime] = useState(e);
-  const submitHandler = (playdate) => {
+  const submitHandler = (playdate, setErrors) => {
     axios
       .post(`${process.env.REACT_APP_SERVER_ADDRESS}/api/playdates`, playdate, {
         withCredentials: true,
@@ -28,6 +28,9 @@ function New() {
         navigate("/playdates");
       })
       .catch((err) => {
+        if (err.response.status === 400) {
+          setErrors(err.response.data.err);
+        }
         console.log(err);
       });
   };

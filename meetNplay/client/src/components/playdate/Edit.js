@@ -34,7 +34,7 @@ function Edit() {
         console.log(err);
       });
   }, [playdateId]);
-  const submitHandler = (playdate) => {
+  const submitHandler = (playdate, setErrors) => {
     axios
       .put(
         `${process.env.REACT_APP_SERVER_ADDRESS}/api/playdate/${playdateId}`,
@@ -48,6 +48,9 @@ function Edit() {
         navigate(`/playdate/${playdateId}`);
       })
       .catch((err) => {
+        if (err.response.status === 400) {
+          setErrors(err.response.data.err);
+        }
         console.log(err);
       });
   };

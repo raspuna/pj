@@ -20,7 +20,7 @@ function PlaydateInfo(props) {
     setEndTime,
     buttonText,
   } = props;
-
+  const [errors, setErrors] = useState({});
   const [dateDay, setDateDay] = useState({
     y: startDate.getFullYear(),
     m: startDate.getMonth(),
@@ -47,7 +47,7 @@ function PlaydateInfo(props) {
     playdate.place = place;
     setPlaydate(playdate);
     console.log(playdate);
-    props.submitHandler(playdate);
+    props.submitHandler(playdate, setErrors);
   };
   const changeHandler = (e) => {
     console.log(e);
@@ -55,6 +55,9 @@ function PlaydateInfo(props) {
     console.log(startTime);
   };
   const setDateHandler = (d) => {
+    if (!d) {
+      return;
+    }
     setStartDate(d);
     const year = d.getFullYear();
     const month = d.getMonth();
@@ -73,10 +76,16 @@ function PlaydateInfo(props) {
             name="title"
             onChange={changeHandler}
           />
+          {errors.title && (
+            <Form.Text className="text-danger">{errors.msg}</Form.Text>
+          )}
         </FormGroup>
         <FormGroup>
           <Form.Label>Place:</Form.Label>
           <Form.Control type="text" value={place} name="place" readOnly />
+          {errors.place && (
+            <Form.Text className="text-danger">{errors.msg}</Form.Text>
+          )}
         </FormGroup>
         <FormGroup>
           <Form.Label>Date:</Form.Label>
@@ -91,11 +100,13 @@ function PlaydateInfo(props) {
           <DatePicker
             selected={startTime}
             onChange={(time) => {
-              setStartTime(time);
+              if (time) {
+                setStartTime(time);
+              }
             }}
             showTimeSelect
             showTimeSelectOnly
-            timeIntervals={15}
+            timeIntervals={30}
             timeCaption="Time"
             dateFormat="h:mm aa"
           />
@@ -104,10 +115,14 @@ function PlaydateInfo(props) {
           <Form.Label>End Time:</Form.Label>
           <DatePicker
             selected={endTime}
-            onChange={(time) => setEndTime(time)}
+            onChange={(time) => {
+              if (time) {
+                setEndTime(time);
+              }
+            }}
             showTimeSelect
             showTimeSelectOnly
-            timeIntervals={15}
+            timeIntervals={30}
             timeCaption="Time"
             dateFormat="h:mm aa"
           />

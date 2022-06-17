@@ -1,4 +1,16 @@
 const { query } = require("../config/mysql");
+const validatePlaydate = (playdate) => {
+  if (!playdate.title) {
+    return [false, { title: "title", msg: "Title is missing" }];
+  }
+  if (!playdate.place) {
+    return [
+      false,
+      { place: "place", msg: "Place is missing(please use search box!)" },
+    ];
+  }
+  return [true, null];
+};
 const create = async (data) => {
   console.log("playdate create");
   sql = "INSERT INTO playdates SET ?";
@@ -47,4 +59,5 @@ module.exports = {
   findOne,
   update,
   remove,
+  validatePlaydate,
 };
