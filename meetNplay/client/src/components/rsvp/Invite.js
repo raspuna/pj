@@ -38,9 +38,13 @@ function FriendList(props) {
   };
   const submitHandler = (e) => {
     e.preventDefault();
+
     console.log(invitations);
     const friends = Object.keys(invitations);
-    console.log(friends);
+    if (friends.length === 0) {
+      console.log("nothing to do");
+      return;
+    }
     axios
       .post(
         `${process.env.REACT_APP_SERVER_ADDRESS}/api/rsvp`,
