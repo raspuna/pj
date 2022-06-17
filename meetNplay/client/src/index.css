@@ -4,8 +4,3 @@
   src: local("Mystery_Quest"), url("./fonts/Mystery_Quest/MysteryQuest-Regular.ttf") format("truetype");
   font-weight: normal;
 }
-@font-face {
-  font-family: "Patrick_Hand";
-  src: local("Patrick_Hand"), url("./fonts/Patrick_Hand/PatrickHand-Regular.ttf") format("truetype");
-  font-weight: normal;
-}
