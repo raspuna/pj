@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
+import * as CONST from "../rsvp/RsvpText";
 function PlaydateList(props) {
   const isHost = props.type;
 
@@ -28,7 +28,11 @@ function PlaydateList(props) {
       {playdates.map((p) => (
         <p key={p.id}>
           <Link to={`/playdate/${p.id}`}> {p.title}</Link>
-          {!isHost && <span>by {p.host_id}</span>}
+          {!isHost && (
+            <span>
+              ({CONST.rsvpText(p.rsvp_status)}) by {p.host_id}
+            </span>
+          )}
           {new Date(p.start_time).toLocaleDateString()}
           {new Date(p.start_time).toLocaleTimeString()} ~
           {new Date(p.end_time).toLocaleTimeString()}
