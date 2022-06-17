@@ -97,13 +97,11 @@ const login = async (req, res) => {
   try {
     const results = await User.findOne({ email: email });
 
-    console.log(results);
     if (results.length == 0) {
       res.status(401).json({ err: "user not found" });
       return;
     }
     const user = results[0];
-    console.log(user);
     const correctPassword = await bcrypt.compare(
       req.body.password,
       user.password

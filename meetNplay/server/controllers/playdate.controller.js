@@ -31,7 +31,7 @@ const getPlaydates = async (req, res) => {
   const id = decodeJwt.payload.id;
   try {
     const results = await Playdate.find(id);
-    console.log(results);
+    //console.log(results);
     res.status(200).json(results);
   } catch (e) {
     console.log(e);
@@ -43,7 +43,7 @@ const getInvitedPlaydates = async (req, res) => {
   const id = decodeJwt.payload.id;
   try {
     const results = await Playdate.findInvited(id);
-    console.log(results);
+    //console.log(results);
     res.status(200).json(results);
   } catch (e) {
     console.log(e);
@@ -56,7 +56,7 @@ const getRsvps = async (req, res) => {
   const id = req.params.id;
   try {
     const results = await Playdate.findRsvps([id, myid]);
-    console.log(results);
+    //console.log(results);
     res.status(200).json(results);
   } catch (e) {
     console.log(e);
@@ -75,7 +75,7 @@ const getPlaydate = async (req, res) => {
         ? { ...result[0], isHost: true }
         : { ...result[0], isHost: false };
 
-    console.log(retData);
+    //console.log(retData);
     res.status(200).json(retData);
   } catch (e) {
     console.log(e);
@@ -122,7 +122,7 @@ const updatePlaydate = async (req, res) => {
   try {
     const result = await Playdate.update(data, req.params.id);
 
-    console.log(result);
+    //console.log(result);
     res.status(200).json(result[0]);
   } catch (e) {
     console.log(e);
