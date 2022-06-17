@@ -11,7 +11,8 @@ const find = (data) => {
 };
 const findInvited = (data) => {
   console.log("find invited playdates");
-  sql = `SELECT p.*, rsvp_status FROM playdates p 
+  sql = `SELECT p.*, u.name, rsvp_status FROM playdates p
+  JOIN users u ON u.id=p.host_id 
   JOIN rsvps r ON p.id = r.playdate_id WHERE r.user_id=? ORDER BY start_time`;
   return query(sql, data);
 };
