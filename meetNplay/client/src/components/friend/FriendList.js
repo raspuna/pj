@@ -20,7 +20,7 @@ function FriendList() {
     <div>
       <Header />
       <Link to="/newFriend">Add a Friend</Link>
-      <table>
+      <table className="table table-striped">
         <thead>
           <tr>
             <th>Name</th>

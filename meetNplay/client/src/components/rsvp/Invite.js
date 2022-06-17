@@ -66,7 +66,7 @@ function FriendList(props) {
   return (
     <div>
       <Form onSubmit={submitHandler}>
-        <table>
+        <table className="table table-striped">
           <thead>
             <tr>
               <th>Name</th>
