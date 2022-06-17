@@ -10,9 +10,9 @@ const find = (data) => {
   return query(sql, data);
 };
 const findInvited = (data) => {
-  console.log("find invited playdate");
+  console.log("find invited playdates");
   sql = `SELECT p.*, rsvp_status FROM playdates p 
-  JOIN rsvps r ON p.id = r.playdate_id WHERE r.user_id=? `;
+  JOIN rsvps r ON p.id = r.playdate_id WHERE r.user_id=? ORDER BY start_time`;
   return query(sql, data);
 };
 const findRsvps = (data) => {
