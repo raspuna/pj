@@ -15,6 +15,7 @@ function Logout() {
       })
       .catch((err) => {
         console.log("Can't get logged in user", err);
+        navigate("/");
       });
   }, []);
   const logoutHandler = (e) => {
