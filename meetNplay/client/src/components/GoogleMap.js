@@ -78,26 +78,24 @@ function GoogleMap(props) {
     mapDraw();
   };
   return (
-    <>
-      <Form>
-        <div className="d-flex">
-          {showSearchBar && (
-            <>
-              <Form.Control
-                type="text"
-                value={query}
-                name="query"
-                onChange={changeHandler}
-              />
-              <Button variant="success" onClick={reDraw}>
-                search
-              </Button>
-            </>
-          )}
-        </div>
-        <div ref={ref} id="map" style={containerStyle} />
-      </Form>
-    </>
+    <Form>
+      <div className="d-flex">
+        {showSearchBar && (
+          <>
+            <Form.Control
+              type="text"
+              value={query}
+              name="query"
+              onChange={changeHandler}
+            />
+            <Button variant="success" onClick={reDraw}>
+              search
+            </Button>
+          </>
+        )}
+      </div>
+      <div ref={ref} id="map" style={containerStyle} />
+    </Form>
   );
 }
 

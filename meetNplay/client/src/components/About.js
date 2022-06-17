@@ -13,26 +13,22 @@ function About() {
       <Header />
       <div className="d-flex align-items-baseline">
         <h3>
-          {" "}
           About<span style={titleFont}> MeetNPlay</span>
         </h3>
         <p className="text-muted"> by Kyeongeun Choi </p>
       </div>
       <p>Description</p>
       <ul>
-        {" "}
         <span style={titleFont}> MeetNPlay</span>is a playdate scheduler.
       </ul>
       <ul> Add friends, and invite them to my playdate easily!</ul>
       <p>
-        {" "}
         Why <span style={titleFont}> MeetNPlay</span>?
       </p>
       <ul>
         <li>Add place address easily</li>
         <li>Invite easily</li>
         <li>Check RSVP easily</li>
-        <li> </li>
       </ul>
       <p>Stack</p>
       <ul>MySQL - express, react, node</ul>
@@ -45,10 +41,13 @@ function About() {
       </ol>
       <p>What I've learn</p>
       <ul>
-        <li>mysql-node api</li>
+        <li>MySql-Node api</li>
         <li>Google Map api</li>
-        <li>jsonwebtoken authentication</li>
-        <li>react-bootstrap theme</li>
+        <li>Jsonwebtoken authentication</li>
+        <li>
+          React-bootstrap theme -{" "}
+          <a href="https://bootswatch.com/">bootswatch</a>
+        </li>
       </ul>
     </div>
   );
