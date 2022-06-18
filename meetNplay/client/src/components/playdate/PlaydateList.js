@@ -28,7 +28,15 @@ function PlaydateList(props) {
       <p>upcoming({playdates.length})</p>
       {playdates.map((p) => {
         return (
-          <Card bg={CONST.rsvpColor(p.rsvp_status)} key={p.id} className="mb-3">
+          <Card
+            bg={
+              new Date(p.start_time) < Date.now()
+                ? "secondary"
+                : CONST.rsvpColor(p.rsvp_status)
+            }
+            key={p.id}
+            className="mb-3"
+          >
             {!isHost && (
               <Card.Header>{CONST.rsvpTextOnly(p.rsvp_status)}</Card.Header>
             )}
