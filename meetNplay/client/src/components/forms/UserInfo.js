@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { Form, FormGroup, Button } from "react-bootstrap";
+import Title from "../Title";
 
 function UserInfo(props) {
   const [errors, setErrors] = useState({});
@@ -26,6 +28,9 @@ function UserInfo(props) {
   };
   return (
     <div>
+      <h1 className="d-flex justify-content-center mt-5">
+        <Title />{" "}
+      </h1>
       <Form onSubmit={submitHandler}>
         <h1>Sign up</h1>
         <FormGroup>
@@ -93,7 +98,17 @@ function UserInfo(props) {
             onChange={changeHandler}
           />
         </FormGroup>
-        <Button type="submit">Submit</Button>
+        <div className="d-flex mt-2 justify-content-center">
+          <Button variant="success" type="submit">
+            Submit
+          </Button>
+        </div>
+        <div className="d-flex justify-content-end">
+          Already have an account?{" "}
+          <Link className="ms-2" to="/">
+            Log In
+          </Link>
+        </div>
       </Form>
     </div>
   );
