@@ -19,7 +19,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Index />} />
           <Route path="/signup" element={<NewUser />} />
-          <Route path="/home" element={<Home />} />
+          <Route path="/home" element={<PlaydateList />} />
 
           <Route path="/about" element={<About />} />
           <Route path="/friends" element={<FriendList />} />
