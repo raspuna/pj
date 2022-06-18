@@ -7,12 +7,15 @@ function Index() {
   return (
     <div className="d-flex justify-content-center align-items-center">
       <div>
-        <h1 className="mt-5">
+        <h1 className="d-flex justify-content-center mt-5">
           <Title />
         </h1>
         <LogIn />
         <div className="d-flex justify-content-end">
-          <Link to="/signup">Sign Up</Link>
+          Don't have an account yet?
+          <Link className="ms-2" to="/signup">
+            Sign Up
+          </Link>
         </div>
       </div>
     </div>
