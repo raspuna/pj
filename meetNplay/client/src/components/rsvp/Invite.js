@@ -70,6 +70,7 @@ function FriendList(props) {
         for (var i = 0; i < friends.length; i++) {
           rsvps[friends[i]] = 0;
         }
+        setButtonColor("secondary");
         setInvitations({});
         setRsvps(rsvps);
         console.log(rsvps);
