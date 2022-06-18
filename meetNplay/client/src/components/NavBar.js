@@ -1,12 +1,12 @@
 import React from "react";
 import { Navbar, Nav } from "react-bootstrap";
-import "./Header.css";
+import Title from "./Title";
 
 function NavBar() {
   return (
     <Navbar bg="primary" variant="dark" expand="md" className="mb-2">
       <Navbar.Brand href="/home" className="ms-4 MyTitle">
-        <div style={{ color: "#FD5253" }}>MeetNPlay</div>
+        <Title />
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">

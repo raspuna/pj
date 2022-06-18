@@ -1,29 +1,26 @@
 import React from "react";
 import Header from "./Header";
-import { Row, Col, Tabs, Tab } from "react-bootstrap";
+import Title from "./Title";
 import "./Header.css";
-const titleFont = {
-  fontFamily: "Mystery_Quest",
-  marginRight: "5px",
-  color: "#FD5E53",
-};
+
 function About() {
   return (
     <div>
       <Header />
       <div className="d-flex align-items-baseline">
         <h3>
-          About<span style={titleFont}> MeetNPlay</span>
+          About <Title />
         </h3>
         <p className="text-muted"> by Kyeongeun Choi </p>
       </div>
       <p>Description</p>
       <ul>
-        <span style={titleFont}> MeetNPlay</span>is a playdate scheduler.
+        <Title />
+        is a playdate scheduler.
       </ul>
       <ul> Add friends, and invite them to my playdate easily!</ul>
       <p>
-        Why <span style={titleFont}> MeetNPlay</span>?
+        Why <Title />?
       </p>
       <ul>
         <li>Add place address easily</li>

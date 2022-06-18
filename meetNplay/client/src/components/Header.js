@@ -1,8 +1,6 @@
 import React from "react";
 import Logout from "./Logout";
 import NavBar from "./NavBar";
-import "./Header.css";
-
 function Header() {
   return (
     <div>

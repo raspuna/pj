@@ -1,7 +1,20 @@
-.MyTitle {
-    color:#FD5253;
+
+
+.TitleFont {
     font-family: Mystery_Quest;
-}/*
+}
+.TitleColor1{
+    color: #ff6b6b;
+}
+
+.TitleColor2{
+    color:#FFD93D
+}
+.TitleColor3{
+    color:#6BCB77
+}
+/*
+
 .Nav {
     text-decoration:None;
     font-family: Patrick_Hand;
