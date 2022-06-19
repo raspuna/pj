@@ -1,11 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import Card from "react-bootstrap/Card";
-import * as CONST from "../rsvp/RsvpText";
+import { Tabs, Tab } from "react-bootstrap";
+import PlaydateCard from "./PlaydateCard";
 function PlaydateList(props) {
   const isHost = props.type;
 
+  const [upcomings, setUpcomings] = useState([]);
   const [playdates, setPlaydates] = useState([]);
   useEffect(() => {
     const url = isHost
@@ -17,7 +17,11 @@ function PlaydateList(props) {
       })
       .then((res) => {
         console.log("playdates", res.data);
-        setPlaydates(res.data);
+        const p = res.data;
+        setPlaydates(p);
+        setUpcomings(
+          p.filter((playdate) => new Date(playdate.start_time) >= Date.now())
+        );
       })
       .catch((err) => {
         console.log(err);
@@ -25,35 +29,18 @@ function PlaydateList(props) {
   }, [isHost]);
   return (
     <div>
-      <p>upcoming({playdates.length})</p>
-      {playdates.map((p) => {
-        return (
-          <Link className="text-decoration-none" to={`/playdate/${p.id}`}>
-            <Card
-              bg={
-                new Date(p.start_time) < Date.now()
-                  ? "secondary"
-                  : CONST.rsvpColor(p.rsvp_status)
-              }
-              key={p.id}
-              className="mb-3"
-            >
-              {!isHost && (
-                <Card.Header>{CONST.rsvpTextOnly(p.rsvp_status)}</Card.Header>
-              )}
-              <Card.Body>
-                <Card.Title>{p.title}</Card.Title>
-                {!isHost && <Card.Subtitle>by {p.name}</Card.Subtitle>}
-                <Card.Text>
-                  {new Date(p.start_time).toLocaleDateString()}{" "}
-                  {new Date(p.start_time).toLocaleTimeString()} ~
-                  {new Date(p.end_time).toLocaleTimeString()}
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Link>
-        );
-      })}
+      <Tabs defaultActiveKey="upcoming" className="mb-2">
+        <Tab eventKey="upcoming" title={`Upcoming(${upcomings.length})`}>
+          {upcomings.map((p) => {
+            return <PlaydateCard p={p} isHost={isHost} />;
+          })}
+        </Tab>
+        <Tab eventKey="all" title={`all(${playdates.length})`}>
+          {playdates.map((p) => {
+            return <PlaydateCard p={p} isHost={isHost} />;
+          })}
+        </Tab>
+      </Tabs>
     </div>
   );
 }
