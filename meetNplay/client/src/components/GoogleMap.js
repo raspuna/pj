@@ -32,6 +32,12 @@ function GoogleMap(props) {
   const { place, setPlace, showSearchBar } = props;
   const [query, setQuery] = useState(place ? place : "");
   const [queryIsDone, setQueryIsDone] = useState(place ? true : false);
+  const enterHandler = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      mapDraw();
+    }
+  };
   const changeHandler = (e) => {
     setQuery(e.target.value);
   };
@@ -87,6 +93,7 @@ function GoogleMap(props) {
               value={query}
               name="query"
               onChange={changeHandler}
+              onKeyDown={enterHandler}
             />
             <Button variant="success" onClick={reDraw}>
               search
