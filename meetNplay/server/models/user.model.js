@@ -45,6 +45,13 @@ const findOne = async (data) => {
   sql = "SELECT * FROM users WHERE ?";
   return await query(sql, data);
 };
+const findOneNotFriend = async (data) => {
+  // [email, myid]
+  sql = `SELECT f.user_id, u.* FROM friendships f 
+  RIGHT JOIN (select * FROM users WHERE email=?) u 
+  ON f.friend_id=u.id AND user_id=?;`;
+  return await query(sql, data);
+};
 
 const update = async (data, id) => {
   console.log(`update id=${id}`);
@@ -62,6 +69,7 @@ module.exports = {
   create,
   find,
   findOne,
+  findOneNotFriend,
   update,
   remove,
 };

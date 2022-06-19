@@ -45,7 +45,7 @@ function AddFriend() {
       )
       .then((res) => {
         console.log(res);
-        setFriend(res.data[0]);
+        setFriend(res.data);
       })
       .catch((err) => {
         if (err.response && err.response.status == 401) {

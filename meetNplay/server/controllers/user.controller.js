@@ -57,18 +57,22 @@ const getUser = (req, res) => {
 const searchUser = async (req, res) => {
   console.log("getUserByEmail");
   const decodeJwt = jwt.decode(req.cookies.usertoken, { complete: true });
+  const myid = decodeJwt.payload.id;
   try {
-    const results = await User.findOne({ email: req.body.email });
+    const results = await User.findOneNotFriend([req.body.email, myid]);
     if (results.length == 0) {
-      res.status(400).json({ err: "The email is not a signed user" });
+      res.status(400).json({ err: "The email is not a signed user." });
       return;
-    } else if (results[0].id === decodeJwt.payload.id) {
+    } else if (results[0].id === myid) {
       res
         .status(400)
-        .json({ err: "It is impossible to add yourself to a friend" });
+        .json({ err: "It's impossible to add yourself to a friend." });
+      return;
+    } else if (results[0].user_id !== null) {
+      res.status(400).json({ err: "The user is alreay your friend." });
       return;
     }
-    res.status(200).json(results);
+    res.status(200).json(results[0]);
   } catch (err) {
     console.log("in searchUser", err);
     res.status(500).json({ err });
