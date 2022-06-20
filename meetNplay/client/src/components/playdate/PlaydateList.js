@@ -32,12 +32,12 @@ function PlaydateList(props) {
       <Tabs defaultActiveKey="upcoming" className="mb-2">
         <Tab eventKey="upcoming" title={`Upcoming(${upcomings.length})`}>
           {upcomings.map((p) => {
-            return <PlaydateCard p={p} isHost={isHost} />;
+            return <PlaydateCard key={p.id} p={p} isHost={isHost} />;
           })}
         </Tab>
         <Tab eventKey="all" title={`all(${playdates.length})`}>
           {playdates.map((p) => {
-            return <PlaydateCard p={p} isHost={isHost} />;
+            return <PlaydateCard key={p.id} p={p} isHost={isHost} />;
           })}
         </Tab>
       </Tabs>

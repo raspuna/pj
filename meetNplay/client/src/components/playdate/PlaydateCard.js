@@ -12,7 +12,6 @@ function PlaydateCard(props) {
             ? "secondary"
             : CONST.rsvpColor(p.rsvp_status)
         }
-        key={p.id}
         className="mb-3"
       >
         {!isHost && (
